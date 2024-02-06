@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<title>Sistema de Facturación</title>
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<!-- default CSS -->
+	<link href="css/open-iconic/font/css/open-iconic-bootstrap.css" rel="stylesheet">
+	<!-- PACE CSS -->
+	<link href="js_libs/pace/themes/green/pace-theme-bounce.css" rel="stylesheet">
+	<!-- JQERY INPUTMASK CSS -->
+	<link href="js_libs/jquery-mask/inputmask.css" rel="stylesheet">
+	<!-- CÓDIGO CSS -->
+	<link rel="stylesheet" href="css/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/estilo.css">
+	<!-- ICON FONT AWESON -->
+	<link rel="stylesheet" href="css/font-awesome/css/font-awesome.min.css">
+	<!-- DATATABLE -->
+	<link rel="stylesheet" type="text/css" href="js_libs/DataTables/DataTables/css/jquery.dataTables.min.css"/>
+	<link rel="stylesheet" type="text/css" href="js_libs/DataTables/Responsive/css/responsive.dataTables.min.css"/>
+	<!-- ALERTIFY -->
+ <link rel="stylesheet" href="js_libs/alertify/css/alertify.min.css" />
+<!-- Datepicker Bootstrap -->
+ <link rel="stylesheet" href="css/datepicker/bootstrap-datetimepicker.min.css">
+	
+	{% block extraCSS %}{% endblock %}
+	
+    <script type="text/javascript" src="js_libs/jquery/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="js_libs/jquery/popper.min.js"></script>
+	<script type="text/javascript" src="js_libs/bootstrap.min.js"></script>
+    <!-- JS  METADATA, VALIDATE Y MESSAGES -->
+    <script type="text/javascript" src="js_libs/jquery-validation-1.10.0/lib/jquery.metadata.js"></script>
+    <!--<script type="text/javascript" src="js_libs/jquery-validation-1.10.0/dist/jquery.validate.min.js"></script> -->
+				<script type="text/javascript" src="js_libs/jquery-validation-1.10.0/dist/jquery-validator.js"></script>
+    <script type="text/javascript" src="js_libs/jquery-validation-1.10.0/localization/messages_es.js"></script>
+    <!-- Mensajes con Alertify.js...-->
+    <script type="text/javascript" src="js_libs/alertify/alertify.min.js"></script>
+	<!-- DATATABLES. -->
+	<script type="text/javascript" src="js_libs/DataTables/DataTables/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" src="js_libs/DataTables/Responsive/js/dataTables.responsive.min.js"></script>
+	<!-- PACE -->
+	<script data-pace-options='{"ghostTime":500}' type="text/javascript" src="js_libs/pace/pace.min.js"></script>
+	<!-- FONT AWESON -->
+	<script defer src="css/font-awesome/svg-with-js/js/fontawesome-all.js"></script>
+	<!-- Moment -->
+ <script src="js_libs/datepicker/moment.js"></script>
+ <!-- DateTime -->
+ <script src="js_libs/datepicker/bootstrap-datetimepicker.min.js"></script>
+	<script>
+		/* INVOCA LA FUNCION DE DATA-TOGGLE PARA TOOLTIP TEXT */
+		$(function () {
+		  $('[data-toggle="tooltip"]').tooltip();
+		});
+	</script>
+    {% block javascripts %}	{% endblock %}
+
+	<!-- Administración de Layout Login. -->
+	<script type="text/javascript" src="js_libs/login.js"></script>
+</head>
+<body>
+<!-- FOOTER -->
+ {% if logo_uno != '' %}
+		<footer class="footer py-2">
+			<div class="container">
+				<p>Empresa: {{ nombre_institucion }} - Bienvenido(a): {{ nombre_personal }} - Perfil: {{ nombre_perfil }}</p>	
+			</div>
+		  
+		</footer>
+{% endif %} 
+<!-- Bloque de Menu y Longin User -->
+            	{% block menu %}{% endblock %}		
+				{% block loginUser %}{% endblock %}				
+<!-- Bloque de Contenido de Cada Formulario Cargado. -->
+        {% block contenidos %}
+        
+        {% endblock %}
+
+</body>
+</html>

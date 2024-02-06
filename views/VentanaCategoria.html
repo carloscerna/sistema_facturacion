@@ -1,0 +1,56 @@
+<!-- VENTANA MODAL - MODIFICAR LA FECHA DE LA FACTURA -->
+<div class="row mt-3 text-dark">
+<div class="col">
+<div class="modal fade" data-backdrop="static" data-keyboard="false" id="VentanaCategoria" tabindex="-1" role="dialog" aria-labelledby="VentanaCategoria" aria-hidden="true">
+<div class="modal-dialog modal-md">
+	<div class="modal-content">
+		<div class="modal-header modal-header-info">
+			<h6 class="modal-title" id=""><span class="fa fa-edit"></span><label>¿Editar/Nuevo Registro Categoria?</label></h6>
+			<button class="close" data-dismiss="modal" aria-label="Cerrar" id="CerrarVentanaCategoria">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<!-- FORMULARIO PRINCIPAL. -->
+		<form  action="" method="post" name="form" id="formCategoria" role="form">
+			<div class="modal-body">
+				<div class="container">
+					<div class="row">
+						<div class="col-12 col-md-12 col-lg-12">
+							<!-- NOMBRE DEL CATEGORIA -->
+								<div class="form-group row">
+									<div class="col-12 col-md-12 col-lg-12 mb-1">
+										<label for="txtcategoria">Código Categoria</label>
+										<input type="text" class="form-control" placeholder="Categoria" name="txtCodigoCategoria" id="txtCodigoCategoria" readonly="readonly">
+									</div>
+								</div>
+							<!-- NOMBRE DEL EMPRESA -->
+								<div class="form-group row">
+									<div class="col-12 col-md-12 col-lg-12 mb-1">
+										<span></span>
+										<label for="descripcion">Descripción</label>
+										<input type="text" name="txtDescripcion" id="txtDescripcion" class="form-control required" maxlength = "80" onchange="conMayusculas(this);" autofocus>
+										<span class="errorTXT"></span>
+									</div>
+								</div>
+								<!-- GIRO Y DIRECCI{ON -->
+								<div class="form-group row">
+									<div class="col-12 col-md-12 col-lg-12 mb-1">
+										<label for="observaciones">Observaciones</label>
+										<textarea name="txtObservaciones" id="txtObservaciones" class="form-control"></textarea>
+									</div>
+								</div>
+						</div>
+					</div>
+				</div>
+			</div>
+				<!-- footer modal -->
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-success" id="ActualizarRegistroCategoria" value="SiActualizarRegistro">Aceptar</button>
+					<button class="btn btn-default" data-dismiss="modal">Cerrar</button>
+				</div>
+		</form>
+	</div>
+</div>
+</div>
+</div>			
+</div>

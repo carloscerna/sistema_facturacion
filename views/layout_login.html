@@ -1,0 +1,42 @@
+{# Heredando la plantilla principal #}
+
+
+{% extends 'default_layout.html' %}
+
+{% block loginUser %}
+	<div class="container">
+		<div class="row mt-3 justify-content-center text-dark">
+			<div class="col col-md-6 col-lg-4"  style="background: none;">
+                <div class="card border-success">
+                    <div class="card-body">
+                        <h3 class="card-title">Iniciar Sesión</h3>                        
+                   			<form name="formLogin" id="formLogin" role="form" action="">
+                                <!-- INPUT OCULTOS -->
+                                <input type="hidden" id="accion_buscar" name="accion_buscar" value = "BuscarUser" class="{required:true}">
+                                <div class="form-group">
+                                    <label for="nombre">Nombre</label>
+                                    <input type="text" class="form-control" placeholder="Nombre" name="txtnombre" id="txtnombre" autofocus="autofocus" required="required">
+                                    <span class="errorTXT"></span>
+                                </div>
+            
+                                <div class="form-group">
+                                    <label for="pass">Contraseña</label>
+                                    <input type="password" class="form-control" placeholder="Contraseña" name="txtpassword" id="txtpassword" required="required">
+                                    <span class="errorTXT"></span>
+                                </div>
+            
+                                <button class="btn btn-primary" type="submit">Iniciar</button>
+                            </form>
+                    </div>
+        			<div class="card-footer">
+						Sistema de Facturación
+					</div>
+                </div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
+{% block javascripts %}
+
+{% endblock %}

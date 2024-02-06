@@ -1,0 +1,292 @@
+<!-- VENTANA MODAL - MODIFICAR LA FECHA DE LA FACTURA -->
+<div class="row mt-3 text-dark">
+<div class="col">
+<div class="modal fade" data-backdrop="static" data-keyboard="false" id="VentanaProductos" tabindex="-1" role="dialog" aria-labelledby="VentanaProductos" aria-hidden="true" style="overflow-y: scroll;">
+<div class="modal-dialog modal-lg">
+	<div class="modal-content">
+		<div class="modal-header modal-header-info">
+			<h6 class="modal-title" id=""><span class="oi oi-pencil"></span><label>¿Editar/Nuevo Registro del Producto?</label></h6>
+			<button class="close" data-dismiss="modal" aria-label="Cerrar" id="CerrarVentanaProductos">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<!-- FORMULARIO PRINCIPAL. -->
+		<form  action="" method="post" name="form" id="formProductos" role="form">
+		<!-- INPUT OCULTOS -->
+			<input type="hidden" id="CambiarCodigoProducto" name="CambiarCodigoProducto" value = "si"">
+			<div class="modal-body">
+				<div class="container">
+					<div class="row">
+						<div class="col-12 col-md-12 col-lg-12">
+							<!-- CODIGO CATEGORIA Y DESCRIPCION -->
+								<div class="form-group row">
+									<div class="col-12 col-md-12 col-lg-5">
+										<div class="input-group">
+											<div class="input-group-prepend">
+												<span class="input-group-text">Estatus</span>
+											</div>
+											<select name="lstCodigoEstatus" id="lstCodigoEstatus" class="form-control"></select>																					
+										</div>				
+									</div>
+								</div>
+							<!-- CODIGO CATEGORIA Y DESCRIPCION -->
+								<div class="form-group row">
+									<div class="col-12 col-md-12 col-lg-5">
+										<div class="input-group">
+											<div class="input-group-prepend">
+												<span class="input-group-text">Código Categoria</span>
+											</div>
+											<input type="text" class="form-control" placeholder="Código Categoria" name="txtCodigoCategoria" id="txtCodigoCategoria" readonly="readonly" value="000">
+										</div>
+									</div>
+									<div class="col-12 col-md-12 col-lg-7">
+										<div class="input-group">
+											<div class="input-group-prepend">
+												<span class="input-group-text">Descripción</span>
+											</div>
+											<select name="lstCodigoCategoria" id="lstCodigoCategoria" class="form-control"></select>																					
+										</div>				
+									</div>
+								</div>
+							<!-- CODIGO PRODUCTO Y DESCRIPCION -->
+								<div class="form-group row">
+									<div class="col-12 col-md-12 col-lg-4">
+										<div class="input-group">
+											<div class="input-group-prepend">
+												<span class="input-group-text">Código Producto</span>
+											</div>
+											<input type="text" class="form-control " placeholder="Código Producto" name="txtCodigoProducto" id="txtCodigoProducto" readonly="readonly" value="000">
+										</div>
+									</div>
+									<div class="col-12 col-md-12 col-lg-8">
+										<div class="input-group mb-1">
+											<div class="input-group-prepend">
+												<span class="input-group-text">Descripción</span>
+											</div>
+											<input type="text" class="form-control" placeholder="Descripción Producto" name="txtDescripcionProducto" id="txtDescripcionProducto" maxlength = "80" onchange="conMayusculas(this);" autofocus required>
+											<p><span class="errorTXT"></span></p>
+										</div>				
+									</div>
+								</div>								
+							<!-- CODIGO DE BARRA Y PRODUCTO EXENTO -->
+								<div class="form-group row">
+									<div class="col-12 col-md-12 col-lg-8">
+										<div class="input-group">
+											<div class="input-group-prepend">
+												<span class="input-group-text"><span class="fa fa-barcode"></span> Código Barra</span>
+											</div>
+											<input type="text" name="txtCodigoBarra" id="txtCodigoBarra" class="form-control" maxlength = "50" onchange="conMayusculas(this);">
+										</div>
+									</div>				
+									<div class="col-12 col-md-12 col-lg-4">
+										<div class="input-group">
+											<div class="input-group-prepend">
+												<span class="input-group-text">Exento</span>
+											</div>
+											<select name="lstProductoExento" id="lstProductoExento" class="form-control">
+												<option value="01">Sí</option>
+												<option value="02" selected>No</option>
+											</select>																					
+										</div>				
+									</div>
+								</div>
+									<!-- PRECIO COSTO, VENTA, AJUSTEE -->
+								<div class="form-group row">
+									<div class="col-12 col-md-12 col-lg-6">
+										<div class="input-group mb-1">
+											<div class="input-group-prepend">
+												<span class="input-group-text">Precio Costo</span>
+											</div>
+											<input type="text" name="txtPrecioCosto" id="txtPrecioCosto" class="form-control" value="0">
+										</div>
+										<div class="input-group mb-1">
+											<div class="input-group-prepend">
+												<span class="input-group-text">Precio Venta Estimado</span>
+											</div>
+											<input type="text" name="txtPrecioVenta" id="txtPrecioVenta" class="form-control" value="0">
+										</div>
+										<div class="input-group mb-1">
+											<div class="input-group-prepend">
+												<span class="input-group-text">P/V Ajuste</span>
+											</div>
+											<input type="text" name="txtPrecioVentaAjuste" id="txtPrecioVentaAjuste" class="form-control" value="0">
+										</div>
+										<div class="input-group mb-1">
+											<div class="input-group-prepend">
+												<span class="input-group-text">Precio Venta Público</span>
+											</div>
+											<input type="text" name="txtPrecioVentaPublico" id="txtPrecioVentaPublico" class="form-control" value="0">
+										</div>
+									</div>
+									<div class="col-12 col-md-12 col-lg-6 mb-1">
+										<div class="input-group mb-1">
+											<div class="input-group-prepend">
+												<span class="input-group-text">Existencia</span>
+											</div>
+											<input type="number" name="txtExistencia" id="txtExistencia" class="form-control" value="0">
+										</div>
+										<div class="input-group mb-1">
+											<div class="input-group-prepend">
+												<span class="input-group-text">Existencia Mínima</span>
+											</div>
+											<input type="number" name="txtExistenciaMinima" id="txtExistenciaMinima" class="form-control" value="1">
+										</div>
+										<div class="input-group mb-1">
+											<div class="input-group-prepend">
+												<span class="input-group-text">Convertir Cantidad</span>
+											</div>
+											<input type="number" name="txtConvertirCantidad" id="txtConvertirCantidad" class="form-control" value="0">
+										</div>
+										<div class="input-group">
+											<div class="input-group-prepend">
+												<span class="input-group-text">Unidad/Medida</span>
+											</div>
+											<select name="lstUnidadMedida" id="lstUnidadMedida" class="form-control">
+												<option value="01" selected>Unidad</option>
+											</select>
+										</div>
+									 </div>
+								</div>
+								<!-- PORCENTAJE DE LA VENTA Y BONTON GUARDAR % -->
+								<div class="form-group row">
+									<div class="col-12 col-md-12 col-lg-6">
+										<div class="input-group">
+											<div class="input-group-prepend">
+												<span class="input-group-text">Porcentaje de la Venta</span>
+											</div>
+											<select name="lstPorcentajeVenta" id="lstPorcentajeVenta" class="form-control"></select>
+										</div>
+									</div>				
+									<div class="col-12 col-md-12 col-lg-2">
+										<button type="button" class="btn btn-secondary" id="goPorcentajeGuardar" value="">Agregar %</button>
+									</div>
+									<div class="col-12 col-md-12 col-lg-3">
+										<button type="button" class="btn btn-secondary" id="goUnidadMedida" value="">Agregar Unidad de Medida</button>
+									</div>
+								</div>
+								<!-- CREACION DE LA TABLA PARA EL INGRESO DE DATOS DESDE AJAX Y PHP. -->
+								<div class="row">
+									<div class="col-12 col-md-12">
+											<table id="listadoPorcentaje" class="table table-striped table-condensed table-hover table-responsive-sm text-dark">
+													<thead>
+														<tr class="bg-secondary text-white" style="font-size: 12px;">
+																<th>Id</th>
+																<th>Código</th>
+																<th>Descripcion</th>
+																<th>Porcentaje %</th>
+																<th>Precio</th>
+																<th>Precio Ajuste</th>
+																<th>Precio Final</th>
+																<th></th>
+																<th></th>
+														</tr>
+													</thead>
+													<tbody id="listaUsuariosOK">
+														<!-- Datos que provienen de la consulta con Ajax y PHP. -->
+													</tbody>
+											</table>
+										</div>
+								</div>
+						</div> <!-- DIV SECUNDARIO -->
+					</div> <!-- ROW -->
+				</div> <!-- CONTAINER -->
+			</div> <!-- MODAL BODY -->
+				<!-- footer modal -->
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-success" id="ActualizarRegistroProducto" value="SiActualizarRegistro">Aceptar</button>
+					<button class="btn btn-default" data-dismiss="modal">Cerrar</button>
+				</div>
+		</form>
+	</div>
+</div>
+</div>
+</div>			
+</div>
+<!--		VENTANA MODAL - ELIMINAR PORCENTAJE-->
+<div class="row mt-3 text-dark">
+		<div class="col">
+			<div class="modal fade" data-backdrop="static" data-keyboard="false" id="VentanaEliminarPorcentaje" tabindex="-1" role="dialog" aria-labelledby="VentanaEliminarPorcentaje" aria-hidden="true">
+					<div class="modal-dialog modal-md">
+						<div class="modal-content">
+							<div class="modal-header modal-header-warning">
+								<h6 class="modal-title" id=""><span class="fa fa-trash"></span>¿Desea Eliminar El Registro?</h6>
+								<button class="close" data-dismiss="modal" aria-label="Cerrar">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+
+							<div class="modal-body">
+								<div class="container-fluid">
+									<div class="row">
+										<div class="col-12 col-md-12">
+											<p>
+
+											</p>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="modal-footer">
+								<button class="btn btn-success" id="BotonEliminarPorcentaje" value="SiEliminarRegistro">Aceptar</button>
+								<button class="btn btn-default" data-dismiss="modal">Cerrar</button>
+							</div>
+						</div>
+					</div>
+			</div>
+		</div>
+</div>
+<!--		AGREGAR O QUITAR PRODUCTOS UNIDAD DE MEDIDAD -->
+<div class="row mt-3 text-dark">
+		<div class="col">
+			<div class="modal fade" data-backdrop="static" data-keyboard="false" id="VentanaUnidadMedida" tabindex="-1" role="dialog" aria-labelledby="VentanaUnidadMedida" aria-hidden="true">
+					<div class="modal-dialog modal-md">
+						<div class="modal-content">
+							<div class="modal-header modal-header-warning">
+								<h6 class="modal-title" id=""><span class="oi oi-trash"></span>¿Agregar/Quitar Producto Unidad de Medida?</h6>
+								<button class="close" data-dismiss="modal" aria-label="Cerrar">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+
+							<div class="modal-body">
+								<div class="container-fluid">
+									<div class="row">
+										<form  action="" method="post" name="formUnidadMedida" id="form" role="form">
+											<div class="form-group row">
+												<div class="col-12 col-md-12 col-lg-6">
+													<div class="input-group">
+														<label>Catálogo Unidad de Medida</label>
+														<select name="lstCatalogoUnidadMedida" id="lstCatUnidadMedida" class="form-control" multiple="multiple" style="width: auto;" data-toggle="tooltip" title="Seleccione para agregar >>"></select>
+													</div>
+												</div>				
+												<div class="col-12 col-md-12 col-lg-6">
+													<div class="input-group">
+														<label>Unidad Medida Producto</label>
+														<select name="lstProductoUnidadMedida" id="lstProUnidadMedida" class="form-control" multiple="multiple" style="width: auto;" data-toggle="tooltip" title="<< Seleccione para quitar"></select>															
+													</div>				
+												</div>
+											</div>
+											
+											<div class="form-group row">
+												<div class="col-12 col-md-6 col-lg-6 align-self-center" >
+													<button type="button" class="btn btn-secondary" id="goAgregarUnidadMedida">Agregar >></button>
+												</div>
+												<div class="col-12 col-md-6 col-lg-6 align-self-center">
+													<button type="button" class="btn btn-secondary" id="goQuitarUnidadMedida"> << Quitar</button>
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+
+							<div class="modal-footer">
+								<button class="btn btn-default" data-dismiss="modal">Cerrar</button>
+							</div>
+						
+						</div>
+					</div>
+			</div>
+		</div>
+</div>

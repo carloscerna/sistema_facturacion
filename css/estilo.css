@@ -1,0 +1,163 @@
+/* ESTILOS PERSONALIZANODS PARA EL ENTORNO DEL SISTEMA*/
+		body {
+		   background-image: url("../img/madera.jpg");
+		   background-color: #cccccc;
+		   color: white;
+			 font-size: 14px;
+		}
+		/*Captura del Error del Span para el Validate de Cada Input */
+		.error{
+			font-size: 9pt;
+			font-family: arial, sans-serif;
+			color: red;
+		}
+		input:invalid {
+		  border: 1px solid red;
+		}
+		
+		input:valid {
+		  border: 1px solid green;
+		}
+		
+		footer {
+			font-family: "Times New Roman", Georgia, Serif;	
+			font-size: 12px;
+			text-align: left;
+			position: fixed;
+			bottom: 0;
+			left: 0;
+			height: 35px;
+			background-color: #666;
+			color: white;
+			width: 100%;
+		}
+        
+/* CSS used here will be applied after bootstrap.css */
+.modal-header-success {
+    color:#fff;
+    padding:9px 15px;
+    border-bottom:1px solid #eee;
+    background-color: #5cb85c;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+     border-top-left-radius: 5px;
+     border-top-right-radius: 5px;
+}
+.modal-header-warning {
+	color:#fff;
+    padding:9px 15px;
+    border-bottom:1px solid #eee;
+    background-color: #f0ad4e;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+     border-top-left-radius: 5px;
+     border-top-right-radius: 5px;
+}
+.modal-header-danger {
+	color:#fff;
+    padding:9px 15px;
+    border-bottom:1px solid #eee;
+    background-color: #d9534f;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+     border-top-left-radius: 5px;
+     border-top-right-radius: 5px;
+}
+.modal-header-info {
+    color:#fff;
+    padding:9px 15px;
+    border-bottom:1px solid #eee;
+    background-color: #5bc0de;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+     border-top-left-radius: 5px;
+     border-top-right-radius: 5px;
+}
+.modal-header-primary {
+	color:#fff;
+    padding:9px 15px;
+    border-bottom:1px solid #eee;
+    background-color: #428bca;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+     border-top-left-radius: 5px;
+     border-top-right-radius: 5px;
+}
+
+/* configuraciones de datable y otros. */
+/*Captura del Error del Span para el Validate de Cada Input */
+		.error{
+			font-size: 9pt;
+			font-family: arial, sans-serif;
+			color: red;
+		}
+		.row > div {
+			background: #ddf0fe;
+			margin:0px 0;
+		}
+
+/* LIMPIAR CAJA DE TEXTO DEL SEARCH*/	
+	input[type="search"] {
+  -webkit-appearance: searchfield;
+}
+input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: searchfield-cancel-button;
+		color: red;
+}
+
+/*DATA TABLE - COLOR PARA EL INPUT DE BUSQUEDA.*/
+.dataTables_filter input {
+   background-color: #58FAAC;
+   color: blue;
+   text-align: right;
+   font-size: large;
+   font-family: sans-serif;
+   }
+/* CAMBIO DE COLOR CUANDO ES PENDIENTE O PAGADA LA FACTURA */
+/* AFECTA A LAS COLUMNAS DEL DATATABLE. */
+   td.pagada {
+        font-weight: bold;
+        color: blue;
+    }
+   td.pendiente {
+        font-weight: bold;
+        color: red;
+    }
+   td.ccf {
+        font-weight: bold;
+        color: green;
+    }
+   td.exento_no {
+        font-weight: bold;
+        color: brown;
+    }
+   td.exento_si {
+        font-weight: bold;
+        color: blue;
+    }
+   td.existencia {
+        font-weight: bold;
+        color: red;
+    }
+/* COLORES PARA EL ROW DEL DEIV VENTA SY DATOS */
+.widgets {
+	background: #f2f2f2;
+	color: #424242;
+	margin-bottom: 20px;
+}
+
+.widgets > div {
+	background: #2196f3;
+	color: #fff;
+	padding: 5px;
+} 

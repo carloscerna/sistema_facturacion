@@ -1,0 +1,327 @@
+{# Heredando la plantilla principal #}
+
+
+{% extends 'default_layout.html' %}
+
+{% block extraCSS %}
+
+{% endblock %}
+
+{% block javascripts %}
+    <!-- JS para esta página. -->
+	<script type="text/javascript" src="js_libs/jquery-mask/jquery.inputmask.bundle.js"></script>
+	<script type="text/JavaScript" src="js_libs/FacturasCompras.js"></script> <!-- Administrar la Factura Ventas y Detalles Ventas -->
+	<script type="text/JavaScript" src="js_libs/DatosBuscarProductosComprasDesdeFactura.js"></script> <!-- buscar datos en la tabla productos  y austed el PRECIO DE COMPRA-->
+{% endblock %}
+
+{% block contenidos %}
+<div class="container-fluid">
+	<div class="row mt-3" id="ListadoFacturasCompras">
+			<div class="col">
+				<ul class="nav nav-tabs">
+					<li class="nav-item">
+						<a href="#tab1" class="nav-link active" data-toggle="tab"><span class="fa fa-cart-plus"></span> Facturas</a>
+					</li>
+				</ul>
+
+				<div class="tab-content">
+					<div class="tab-pane active" id="tab1" role="tabpanel">
+						<!-- ENCABEZADO Y MODIFICACIÓN DE LA FECHA PARA LA FACTURA. -->
+							<div class="row widgets justify-content-between">
+								<div class="col col-md-4 col-lg-2 align-self-start">
+									<h3><span class="fa fa-cart-plus"></span> Compras</h3>
+								</div>
+							</div>
+				<!-- CREACION DE LA TABLA PARA EL INGRESO DE DATOS DESDE AJAX Y PHP. -->
+						<div class="row">
+							<div class="col">
+									<table id="listadoCompras" class="table table-striped table-hover table-responsive-lg text-dark">
+											<thead>
+												<tr class="bg-secondary text-white">
+														<th>Id</th>
+														<th>Fecha</th>
+														<th>Nº Factura</th>
+														<th>Tipo Factura</th>
+														<th>Código Proveedor</th>
+														<th>Nombre Proveedor</th>
+														<th>Total Compra</th>
+														<th>Estado </th>
+														<th></th>	<!-- Botón Editar -->
+														<th></th> <!-- Botón Anular -->
+														<th></th> <!-- Botón Imprimir -->
+												</tr>
+											</thead>
+											<tbody id="listaUsuariosOK">
+												<!-- Datos que provienen de la consulta con Ajax y PHP. -->
+											</tbody>
+									</table>
+								</div>
+								</div>
+					</div> <!-- tab 1 -->
+				</div> <!-- tab content -->
+			</div> <!-- col -->
+		</div> <!-- row -->
+</div> <!-- container -->
+<!-- plantilla que contiene el Ventana Editar Compra. -->
+<div class="row mt-3 text-dark">
+			<div class="col">
+			<div class="modal fade" data-backdrop="static" data-keyboard="false" id="VentanaEditarCompra" tabindex="-2" role="dialog" aria-labelledby="VentanaEditarCompra" aria-hidden="true">
+					<div class="modal-dialog modal-lg">
+						<div class="modal-content">
+							<div class="modal-header modal-header-info">
+								<h6 class="modal-title" id=""><span class="fa fa-edit"></span>¿Editar Factura Compra?</h6>
+								<button class="close" data-dismiss="modal" aria-label="Cerrar">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+
+							<div class="modal-body">
+								<div class="container-fluid">
+									<div class="row">
+										<div class="col-12">
+												<form  action="" method="post" name="formEditarCompra" id="form" role="form">
+													<div class="form-group row">
+														<div class="col-12 border border-primary d-flex justify-content-between">
+															<h6><span for="txtNombreProveedor">Nombre Proveedor </span><label class="badge badge-secondary" for="lblCodigoProveedor"> Código</label></h6>
+															<div>
+																<h6><span>Nº Factura </span><label class="badge badge-secondary" for="lblNumeroFactura"> # Factura</label></h6>
+															</div>
+															
+															<div>
+																<h6><span>Código Tipo Factura </span><label class="badge badge-secondary" for="lblCodigoTipoFactura"> Tipo Factura</label></h6>
+															</div>
+														</div>
+													</div>
+													
+													<div class="form-group row">
+														<div class="col-12 col-md-12 col-lg-6 col-xl-6 border border-primary d-flex justify-content-between">
+															<div class="input-group input-group-sm">
+																<div class="input-group-prepend">
+																	<span class="input-group-text">Fecha</span>
+																</div>
+																<input type="date" name="txtFechaCompra" id="txtFechaCompra" class="form-control form-control-sm">
+															</div>
+																<button type="button" class="btn btn-primary btn-sm" id="goActualizarFecha"><span class="fa">&#xf0c7;</span> Guardar Fecha</button>
+														</div>
+													</div>
+													
+													<table id="listadoEditarCompra" class="table table-striped table-hover table-responsive-lg text-dark">
+															<thead>
+																<tr class="bg-secondary text-white">
+																		<th>Id</th>
+																		<th>Código Producto</th>
+																		<th>Descripción</th>
+																		<th>Cantidad</th>
+																		<th>Precio Compra</th>
+																		<th></th>	<!-- Botón Editar Código Proveedor-->
+																		<th></th> <!-- Botón Anular -->
+																		<th></th> <!-- Botón Editar Código Producto -->
+																</tr>
+															</thead>
+															<tbody id="listaEditarCompra">
+																<!-- Datos que provienen de la consulta con Ajax y PHP. -->
+															</tbody>
+													</table>
+														<div class="form-group row">
+																<div class="col-12 border border-primary rounded">
+																	<h6>Total Factura $ <label class="label label-secondary" for="lblTotalCompra"> </label></h6>
+																</div>
+															</div>						
+												</form>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="modal-footer">
+								<button class="btn btn-success" id="BotonBuscarProducto" value="SiAgregarRegistro">Agregar Producto</button>
+								<button class="btn btn-default" data-dismiss="modal">Cerrar</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+<!--		VENTANA MODAL - ELIMINAR -->
+<!-- plantilla que contiene el Ventana Editar Compra. -->
+<div class="row mt-3 text-dark">
+			<div class="col">
+			<div class="modal fade" data-backdrop="static" data-keyboard="false" id="VentanaEditarCodigoProveedor" tabindex="-2" role="dialog" aria-labelledby="VentanaEditarCodigoProveedor" aria-hidden="true">
+					<div class="modal-dialog modal-md">
+						<div class="modal-content">
+							<div class="modal-header modal-header-info">
+								<h6 class="modal-title" id=""><span class="fa fa-edit"></span>¿Editar Código Proveedor?</h6>
+								<button class="close" data-dismiss="modal" aria-label="Cerrar">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+
+							<div class="modal-body">
+								<div class="container-fluid">
+									<div class="row">
+										<div class="col-12">
+												<form  action="" method="post" name="formEditarCodigoProveedor" id="form" role="form">
+													<div class="form-group row">
+														<div class="input-group input-group-sm mb-1">
+															<div class="input-group-prepend">
+																<span class="input-group-text">Código Proveedor</span>
+															</div>
+															<input type="text" name="txtCodigoProveedor" id="txtCodigoProveedor" class="form-control form-control-sm" autofocus maxlength="5">
+														</div>
+													</div>
+												</form>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="modal-footer">
+								<button class="btn btn-success" id="BotonActualizarCodigoProveedor" value="SiActualizarRegistro">Aceptar</button>
+								<button class="btn btn-default" data-dismiss="modal">Cerrar</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+<!-- plantilla que contiene el Ventana Eliminar factura de la Compra. -->
+<div class="row mt-3 text-dark">
+			<div class="col">
+			<div class="modal fade" id="VentanaEliminar" tabindex="-1" role="dialog" aria-labelledby="VentanaEliminar" aria-hidden="true">
+					<div class="modal-dialog modal-md">
+						<div class="modal-content">
+							<div class="modal-header modal-header-warning">
+								<h6 class="modal-title" id=""><span class="fa fa-trash"></span>¿Desea Eliminar El Registro?</h6>
+								<button class="close" data-dismiss="modal" aria-label="Cerrar">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+
+							<div class="modal-body">
+								<div class="container-fluid">
+									<div class="row">
+										<div class="col-12 col-md-12">
+											<p>
+												<h5>Nº Factura: <span class="badge badge-info" for="NumeroFactura"></span></h5>
+												<h6>Código Proveedor: <span class="badge badge-info" for="CodigoProveedor"></span></h3>
+												<h6>Proveedor: <span class="badge badge-info"  for="Proveedor"></span></h3>
+											</p>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="modal-footer">
+								<button class="btn btn-success" id="BotonEliminarRegistro" value="SiEliminarRegistro">Aceptar</button>
+								<button class="btn btn-default" data-dismiss="modal">Cerrar</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+<!-- plantilla que contiene el Ventana Eliminar un Producto de la Factura Compra. -->
+<div class="row mt-3 text-dark">
+			<div class="col">
+			<div class="modal fade" id="VentanaEliminarProducto" tabindex="-1" role="dialog" aria-labelledby="VentanaEliminarProducto" aria-hidden="true">
+					<div class="modal-dialog modal-md">
+						<div class="modal-content">
+							<div class="modal-header modal-header-warning">
+								<h6 class="modal-title" id=""><span class="fa fa-trash"></span>¿Desea Eliminar El Registro?</h6>
+								<button class="close" data-dismiss="modal" aria-label="Cerrar">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+
+							<div class="modal-body">
+								<div class="container-fluid">
+									<div class="row">
+										<div class="col-12 col-md-12">
+											<p>
+												<h5>Id: <span class="badge badge-info" for="IdProducto"></span></h5>
+												<h6>Código Producto: <span class="badge badge-info" for="CodigoProducto"></span></h3>
+												<h6>Cantidad: <span class="badge badge-info" for="CantidadProducto"></span></h3>
+												<h6>Descripción: <span class="badge badge-info"  for="DescripcionProducto"></span></h3>
+											</p>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="modal-footer">
+								<button class="btn btn-success" id="BotonEliminarProducto" value="SiEliminarRegistro">Aceptar</button>
+								<button class="btn btn-default" data-dismiss="modal">Cerrar</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+<!-- plantilla que contiene el Ventana Eliminar un Producto de la Factura Compra. -->
+<div class="row mt-3 text-dark">
+			<div class="col">
+			<div class="modal fade" id="VentanaEditarProducto" tabindex="-1" role="dialog" aria-labelledby="VentanaEditarProducto" aria-hidden="true">
+					<div class="modal-dialog modal-md">
+						<div class="modal-content">
+							<div class="modal-header modal-header-info">
+								<h6 class="modal-title" id=""><span class="fa fa-trash"></span>¿Editar El Registro?</h6>
+								<button class="close" data-dismiss="modal" aria-label="Cerrar">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+
+							<div class="modal-body">
+								<div class="container-fluid">
+									<div class="row">
+										<div class="col-12 col-md-12">
+											<p>
+												<h5>Id: <span class="badge badge-info" for="IdProducto"></span></h5>
+												<h6>Código Producto: <span class="badge badge-info" for="CodigoProductoA"></span></h3>
+												<h6>Descripción: <span class="badge badge-info"  for="DescripcionProducto"></span></h3>
+											</p>
+												<!-- PRECIO COSTO, VENTA, AJUSTEE -->
+													<div class="form-group row">
+														<div class="col-12 col-md-12 col-lg-6">
+															<div class="input-group mb-1">
+																<div class="input-group-prepend">
+																	<span class="input-group-text">Cantidad</span>
+																</div>
+																<input type="number" name="txtCantidad" id="txtCantidad" class="form-control" value="0">
+																<input type="hidden" name="txtCantidadActual" id="txtCantidadActual" class="form-control" value="0">
+															</div>
+															<div class="input-group mb-1">
+																<div class="input-group-prepend">
+																	<span class="input-group-text">Precio Costo</span>
+																</div>
+																<input type="text" name="txtPrecioCosto" id="txtPrecioCosto" class="form-control" value="0">
+															</div>
+														</div>
+													</div>												
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="modal-footer">
+								<button class="btn btn-success" id="BotonActualizarProducto" value="SiActualizarRegistro">Aceptar</button>
+								<button class="btn btn-default" data-dismiss="modal">Cerrar</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+<!-- plantilla que contiene el VentanaBuscarProducto. -->
+		{% include 'VentanaBuscarProducto.html' %}
+<!-- plantilla que contiene el menú principal. -->
+		{% include 'layout-loading.html' %}
+{% endblock %}
+
+{% block menu %}
+<!-- plantilla que contiene el menú principal. -->
+		{% include 'layout-menu.html' %}
+{% endblock %}
+ 
+{% block loginUser %}
+	<!--	{% include 'layout-login-user.html' %} -->
+{% endblock %}

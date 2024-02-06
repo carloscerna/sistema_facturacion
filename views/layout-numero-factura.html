@@ -1,0 +1,175 @@
+{# Heredando la plantilla principal #}
+
+
+{% extends 'default_layout.html' %}
+
+{% block extraCSS %}
+	<!-- TOASTR -->
+	<link rel="stylesheet" type="text/css" href="js_libs/toastr/toastr.css">
+{% endblock %}
+
+{% block javascripts %}
+    <!-- JS para esta página. -->
+	<script type="text/javascript" src="js_libs/jquery-mask/jquery.inputmask.bundle.js"></script>
+	<script type="text/JavaScript" src="js_libs/NumerosFactura.js"></script> <!-- REPORTES -->
+	<!-- JS TOASTR. -->
+	<script type="text/JavaScript" src="js_libs/toastr/toastr.js"></script> <!-- MENSAJES -->
+	<!-- CONFIGURACIÓN DE TOASTR -->
+	<script type="text/javascript">
+		toastr.options = {
+			"closeButton": true,
+			"debug": false,
+			"newestOnTop": false,
+			"progressBar": false,
+			"positionClass": "toast-bottom-right",
+			"preventDuplicates": false,
+			"onclick": null,
+			"showDuration": "300",
+			"hideDuration": "1000",
+			"timeOut": "3000",
+			"extendedTimeOut": "1000",
+			"showEasing": "swing",
+			"hideEasing": "linear",
+			"showMethod": "fadeIn",
+			"hideMethod": "fadeOut"
+	};
+	</script>
+		<script>
+			// VALIDAR LOS ENTER EN EL FORMULARIO.
+			$(document).ready(function() {
+				$('form').keypress(function(e){   
+				  if(e == 13){
+					return false;
+				  }
+				});
+		  
+				$('input').keypress(function(e){
+				  if(e.which == 13){
+					return false;
+				  }
+				});
+				
+		
+				$("#txtFechaAutorizacion").datetimepicker({
+					format: 'DD/MM/YYYY'
+					});
+				$("#txtFechaImpresion").datetimepicker({
+					format: 'DD/MM/YYYY'
+					});
+			});
+		</script>	
+{% endblock %}
+
+{% block contenidos %}
+<div class="container">
+	<div class="row mt-3 text-dark">
+			<div class="col">
+				<ul class="nav nav-tabs" role="tablist">
+					<li class="nav-item">
+					  <a class="nav-link active" href="#Tiraje" role="tab" data-toggle="tab"><span class="fab fa-wpforms"></span> Números de Factura - Tiraje</a>
+					</li>
+				  </ul>
+				  
+				  <!-- Tab panes -->
+				  <div class="tab-content">
+					<div role="tabpanel" class="tab-pane in active" id="Tiraje">
+						<form  action="" method="post" name="formNumeroFactura" id="formNumeroFactura" role="form">
+						<!-- ENCABEZADO Y MODIFICACIÓN DE LA FECHA PARA LA FACTURA. -->
+							<div class="row widgets justify-content-between">
+								<div class="col col-md-4 col-lg-2 align-self-start">
+									<h5><span class="oi oi-spreadsheet"></span> Factura/Tiraje</h5>
+								</div>
+								<div class="col col-md-4 col-lg-2 col-auto ml-auto">
+									<form  action="" method="post" name="form" id="form" role="form">
+										<button type="button" id="NuevoTiraje" class="btn btn-primary"  data-toggle="tooltip" data-placement="top" title="Nuevo Factura/Tiraje"><span class="fa fa-file"></span> Nuevo</button>
+								 </form>
+								</div>
+							</div>
+														
+
+
+							<!-- CREACION DE LA TABLA PARA EL INGRESO DE DATOS DESDE AJAX Y PHP. -->
+								<div class="row">
+									<div class="col-12 col-md-12">
+											<table id="listadoNumerosFactura" class="table table-striped table-condensed table-hover table-responsive-sm text-dark">
+													<thead>
+														<tr class="bg-secondary text-white" style="font-size: 11px;">
+																<th class="centerTXT">Id</th>
+																<th class="centerTXT">Tipo Factura</th>
+																<th class="centerTXT">Tiraje</th>
+																<th class="centerTXT">Número Inicio</th>
+																<th class="centerTXT">Número Fin</th>
+																<th class="centerTXT">Fecha Autorización</th>
+																<th class="centerTXT">Fecha Impresión</th>
+																<th class="centerTXT">Estatus </th>
+																<th></th>
+																<th></th>
+														</tr>
+													</thead>
+													<tbody id="listaUsuariosOK">
+														<!-- Datos que provienen de la consulta con Ajax y PHP. -->
+													</tbody>
+											</table>
+										</div>
+								</div>
+
+						</form> <!-- FORM -->						
+					</div> <!-- TAB VENTAS -->
+					
+				  </div> <!-- TAB CONTENT -->
+
+
+			</div> <!-- col -->
+		</div> <!-- row -->
+</div> <!-- container -->
+<!--		VENTANA MODAL - ELIMINAR -->
+<div class="row mt-3 text-dark">
+			<div class="col">
+			<div class="modal fade" data-backdrop="static" data-keyboard="false" id="VentanaEliminar" tabindex="-1" role="dialog" aria-labelledby="VentanaEliminar" aria-hidden="true">
+					<div class="modal-dialog modal-md">
+						<div class="modal-content">
+							<div class="modal-header modal-header-warning">
+								<h6 class="modal-title" id=""><span class="fa fa-trash"></span>¿Desea Eliminar El Registro?</h6>
+								<button class="close" data-dismiss="modal" aria-label="Cerrar">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+
+							<div class="modal-body">
+								<div class="container-fluid">
+									<div class="row">
+										<div class="col-12 col-md-12">
+											<p>
+												<h5>Id_: <span class="badge badge-info" for="Id"></span></h5>
+												<h6>Tipo de Factura: <span class="badge badge-info" for="TipoFactura"></span></h3>
+												<h6>Tiraje: <span class="badge badge-info"  for="Tiraje"></span></h3>
+											</p>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="modal-footer">
+								<button class="btn btn-success" id="BotonEliminarRegistro" value="SiEliminarRegistro">Aceptar</button>
+								<button class="btn btn-default" data-dismiss="modal">Cerrar</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+<!--
+<!-- plantilla que contiene el VentanaNumeroFacturaTirjae. -->
+		{% include 'VentanaNumeroFacturaTiraje.html' %}
+<!-- plantilla que contiene el menú principal. -->
+		{% include 'layout-loading.html' %}
+{% endblock %}
+
+{% block menu %}
+<!-- plantilla que contiene el menú principal. -->
+		{% include 'layout-menu.html' %}
+{% endblock %}
+ 
+{% block loginUser %}
+	<!--	{% include 'layout-login-user.html' %} -->
+{% endblock %}

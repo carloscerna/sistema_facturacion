@@ -1,0 +1,197 @@
+{% if codigo_perfil == '01' %}
+		<!-- .container nos permite centrar el contenido de nuestro menu, esta clase es opcional y podemos encerrar el menu <nav> o incluir el contenedor dentro del <nav> -->
+		<nav class="navbar navbar-dark bg-primary navbar-expand-md">			
+			<!-- Nos sirve para agregar un logotipo al menu -->
+			<a href="#" class="navbar-brand">{{ nombre_institucion }}</a>
+			<!-- Nos permite usar el componente collapse para dispositivos moviles -->
+			<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Menu de Navegacion">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbar">
+				<div class="navbar-nav mr-auto text-center">
+					<ul class="navbar-nav">
+						<li class="nav-item active">
+							<a href="index.php" class="nav-link"><span class="fa fa-home"></span> Inicio <span class="sr-only">(Actual)</span></a>
+						</li>
+						<li class="nav-item dropdown">
+							<a href="#" class="nav-link dropdown-toggle" id="menu-categorias" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<span class="fa fa-book"></span> Administrar
+							</a>
+							<div class="dropdown-menu" aria-labelledby="menu-categorias">
+								<a href="datos_empleado.php" class="dropdown-item"><span class="fa fa-users"></span> Datos Personal </a>
+							</div>
+						</li>
+						<li class="nav-item dropdown">
+							<a href="#" class="nav-link dropdown-toggle" id="menu-categorias" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<span class="oi oi-loop-square"></span> Movimientos
+							</a>
+							<div class="dropdown-menu" aria-labelledby="menu-categorias">
+								<a href="ventas.php" class="dropdown-item"><span class="fa fa-cart-arrow-down"></span>  Ventas </a>
+								<a href="compras.php" class="dropdown-item"><span class="fa fa-cart-plus"></span>  Compras </a>
+								<div class="dropdown-divider"></div>
+								<a href="facturas_ventas.php" class="dropdown-item"><span class="fa fa-th-list"></span> Facturas Ventas </a>
+								<a href="facturas_compras.php" class="dropdown-item"><span class="fa fa-th-list"></span> Facturas Compras </a>
+							</div>
+						</li>
+						<li class="nav-item dropdown">
+							<a href="#" class="nav-link dropdown-toggle" id="menu-categorias" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<span class="fa fa-wrench"></span> Mantenimiento
+							</a>
+							<div class="dropdown-menu" aria-labelledby="menu-categorias">
+								<a href="catalogo_clientes.php" class="dropdown-item"><span class="fa fa-book"></span>  Catálogo Clientes </a>
+								<a href="catalogo_proveedores.php" class="dropdown-item"><span class="fa fa-book"></span>  Catálogo Proveedores </a>
+								<a href="catalogo_categoria.php" class="dropdown-item"><span class="fa fa-book"></span>  Catálogo Categorías </a>
+								<a href="catalogo_productos.php" class="dropdown-item"><span class="fa fa-book"></span>  Catálogo Productos </a>
+								<div class="dropdown-divider"></div>
+								<a href="medidas.php" class="dropdown-item"><span class="fa">&#xf15c;</span> Medidas Impresión de Facturas </a>
+								<a href=".php" class="dropdown-item"><span class="fa">&#xf065;</span> Exportar e Importar Inventario </a>
+								<div class="dropdown-divider"></div>
+								<a href="numero_factura.php" class="dropdown-item"><span class="fa">&#xf162;</span>  Números de Factura </a>
+							</div>
+						</li>
+						<li class="nav-item dropdown">
+							<a href="#" class="nav-link dropdown-toggle" id="menu-categorias" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<span class="fa">&#xf15c;</span> Reportes
+							</a>
+							<div class="dropdown-menu" aria-labelledby="menu-categorias">
+								<a href="ventas-inventario.php" class="dropdown-item"><span class="fa">&#xf155;</span> Ventas - Resumen Diario</a>
+								<div class="dropdown-divider"></div>
+								<a href="php_libs/reportes/informe_catalogo_productos.php" id="goCatalogoProductos" data-accion="CatalogoProductos" target="_blank" class="dropdown-item"><span class="fa">&#xf15c;</span> Catalogo de Productos </a>
+								<a href="php_libs/reportes/informe_catalogo_productos_codigo_barras.php" id="goCatalogoProductos" data-accion="CatalogoProductos" target="_blank" class="dropdown-item"><span class="fa">&#xf15c;</span> Catalogo de Productos (Código de Barras) </a>
+							</div>
+						</li>
+						<!-- /.MENU ARCHIVOS -->
+						<li class="nav-item dropdown">
+							<a href="#" class="nav-link dropdown-toggle" id="menu-categorias" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<span class="fa">&#xf15c;</span> Archivos
+							</a>
+							<div class="dropdown-menu" aria-labelledby="menu-categorias">
+								<a href="/sistema_facturacion/Archivos" id="goArchivos" data-accion="hoja_de_calculo" target="_blank" class="dropdown-item">Hoja de Cálculo </a>
+							</div>
+						</li>
+
+					</ul>
+				</div>
+				<div class="d-flex flex-row justify-content-center px-4">
+					<!-- Item para cerrar la sesión -->
+						{% include 'layout-login-user.html' %}
+				</div>
+			</div>
+		</nav>
+{% endif %}
+<!--
+                    <li><a href="catalogo_clientes.php" id="gocat_clientes" data-accion="cat_clientes"><i class="glyphicon glyphicon-edit"></i> Catálogo Clientes</a></li>
+					<li><a href="catalogo_proveedores.php" id="gocat_proveedores" data-accion="cat_proveedores"><i class="glyphicon glyphicon-edit"></i> Catálogo Proveedores</a></li>
+					<li><a href="catalogo_categorias.php" id="gocat_categorias" data-accion="cat_categorias"><i class="glyphicon glyphicon-edit"></i> Catálogo Categorías</a></li>
+					<li><a href="catalogo_productos.php" id="gocat_productos" data-accion="cat_productos"><i class="glyphicon glyphicon-edit"></i> Catálogo Productos</a></li>
+					<li><a href="medidas.php" id="goMedidas" data-accion="medidas"><i class="glyphicon glyphicon-edit"></i> Medidas Impresión de Facturas</a></li>
+                    <li><a href="exportar_importar_inventario.php" id="goEIInventario" data-accion="exportar_importar_inventario"><i class="glyphicon glyphicon-edit"></i> Exportar e Importar Inventario</a></li>
+                    <li><a href="numero_factura.php" id="goNumeroFactura" data-accion="numero_factura"><i class="glyphicon glyphicon-edit"></i> Números de Factura</a></li>
+		-->
+<!-- VARIABLE PARA EL DIRECTOR O SUBDIRECTOR. -->
+{% if codigo_perfil == '02' or codigo_perfil == '03'%}
+
+{% endif %}
+
+<!-- PERFIL DE REGISTRO BÁSICA Y MEIDA ADMINISTRAR ALUMNOS REPORTES NOTAS, NO MATENIMIENTO. -->
+{% if codigo_perfil == '04' or codigo_perfil == '05' %}
+	<!-- .container nos permite centrar el contenido de nuestro menu, esta clase es opcional y podemos encerrar el menu <nav> o incluir el contenedor dentro del <nav> -->
+		<nav class="navbar navbar-dark bg-primary navbar-expand-md">			
+			<!-- Nos sirve para agregar un logotipo al menu -->
+			<a href="#" class="navbar-brand">{{ nombre_institucion }}</a>
+			<!-- Nos permite usar el componente collapse para dispositivos moviles -->
+			<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Menu de Navegacion">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbar">
+				<div class="navbar-nav mr-auto text-center">
+					<ul class="navbar-nav">
+						<li class="nav-item active">
+							<a href="index.php" class="nav-link"><span class="fa fa-home"></span> Inicio <span class="sr-only">(Actual)</span></a>
+						</li>
+						<li class="nav-item dropdown">
+							<a href="#" class="nav-link dropdown-toggle" id="menu-categorias" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<span class="fa fa-book"></span> Administrar
+							</a>
+							<div class="dropdown-menu" aria-labelledby="menu-categorias">
+								<a href="datos_personales.php" class="dropdown-item"><span class="fa fa-users"></span> Datos Personal </a>
+							</div>
+						</li>
+						<li class="nav-item dropdown">
+							<a href="#" class="nav-link dropdown-toggle" id="menu-categorias" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<span class="oi oi-loop-square"></span> Movimientos
+							</a>
+							<div class="dropdown-menu" aria-labelledby="menu-categorias">
+								<a href="ventas.php" class="dropdown-item"><span class="fa fa-cart-arrow-down"></span>  Ventas </a>
+								<a href="compras.php" class="dropdown-item"><span class="fa fa-cart-plus"></span>  Compras </a>
+								<div class="dropdown-divider"></div>
+								<a href="facturas_ventas.php" class="dropdown-item"><span class="fa fa-th-list"></span> Facturas Ventas </a>
+								<a href="facturas_compras.php" class="dropdown-item"><span class="fa fa-th-list"></span> Facturas Compras </a>
+							</div>
+						</li>
+
+						<li class="nav-item dropdown">
+							<a href="#" class="nav-link dropdown-toggle" id="menu-categorias" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<span class="fa">&#xf15c;</span> Reportes
+							</a>
+							<div class="dropdown-menu" aria-labelledby="menu-categorias">
+								<a href="ventas-inventario.php" class="dropdown-item"><span class="fa">&#xf155;</span> Ventas - Otros</a>
+								<div class="dropdown-divider"></div>
+								<a href="php_libs/reportes/informe_catalogo_productos.php" id="goCatalogoProductos" data-accion="CatalogoProductos" target="_blank" class="dropdown-item"><span class="fa">&#xf15c;</span> Catalogo de Productos </a>
+								<a href="php_libs/reportes/informe_catalogo_productos_codigo_barras.php" id="goCatalogoProductos" data-accion="CatalogoProductos" target="_blank" class="dropdown-item"><span class="fa">&#xf15c;</span> Catalogo de Productos (Código de Barras) </a>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<div class="d-flex flex-row justify-content-center px-4">
+					<!-- Item para cerrar la sesión -->
+						{% include 'layout-login-user.html' %}
+				</div>
+			</div>
+		</nav>
+
+{% endif %}
+
+{% if codigo_perfil == '06' %}
+
+
+{% endif %}
+
+<!-- PERFIL DE ROOT ROOT - PARA CREAR LOS USUARIOS Y MANTENIMIENTO DEL PESONAL. -->
+{% if codigo_perfil == '99' %}
+
+<div style="font-size: small">
+
+<ul class="nav navbar-nav">
+    <!-- menu inicio -->
+    <li class="active"><a id="goHome" href="index.php"><i class="glyphicon glyphicon-home"></i> Inicio</a></li>    
+    <!-- bloque para armar el menu para Administrar - Alumnos - Personal, etc. -->
+        <ul class="nav navbar-nav">
+	    <li class="dropdown">
+		<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-folder-close"></i> Administrar<span class="caret"></span></a>
+		    <ul class="dropdown-menu open" id="opcionesUsuario">
+				<li class="dropdown-submenu">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown"> Personal</a>
+								<ul class="dropdown-menu">
+									<li><a id="goDatosPersonal" href="datos_personales.php"  data-accion="datos_personal"><i class="glyphicon glyphicon-user"></i> Empleados y Administrativo</a></li>
+								</ul>
+						</li>
+				</li>			
+		    </ul>    
+	    </li>
+	</ul>
+    <!-- Bloque para armar el menu Mantenimiento, etc. -->
+    <ul class="nav navbar-nav">
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-cog"></i> Mantenimiento<b class="caret"></b></a>
+                <ul class="dropdown-menu" id="opcionesUsuario">
+					<li><a href="usuarios.php" id="go_usuarios" data-accion="usuarios"><i class="glyphicon glyphicon-edit"></i> Usuarios</a></li>
+					<li><a href="institucion.php" id="goInstitucion" data-accion="institucion"><i class="glyphicon glyphicon-edit"></i> Institución</a></li>
+                </ul>    
+        </li>
+    </ul>
+</ul>
+	{% include 'layout-login-user.html' %}
+</div>
+{% endif %}
+

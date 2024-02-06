@@ -1,0 +1,146 @@
+<!-- VENTANA MODAL - MODIFICAR LA FECHA DE LA FACTURA -->
+<div class="row mt-3 text-dark">
+<div class="col">
+<div class="modal fade" data-backdrop="static" data-keyboard="false" id="VentanaEmpresaPersona" tabindex="-1" role="dialog" aria-labelledby="VentanaEmpresaPersona" aria-hidden="true">
+<div class="modal-dialog modal-lg">
+	<div class="modal-content">
+		<div class="modal-header modal-header-info">
+			<h6 class="modal-title" id=""><span class="fa fa-edit"></span><label>¿Editar/Nuevo Registro del Empresa/Persona?</label></h6>
+			<button class="close" data-dismiss="modal" aria-label="Cerrar" id="CerrarVentanaEmpresaPersona">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<!-- FORMULARIO PRINCIPAL. -->
+		<form  action="" method="post" name="form" id="formEmpresaPersona" role="form">
+			<div class="modal-body">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-12 col-md-12 col-lg-12">
+							<!-- NOMBRE DEL CLIENTE/EMPRESA Y ESTATUS -->
+								<div class="form-group row">
+									<div class="col-12 col-md-12 col-lg-4 mb-1">
+										<label for="txtcodigoproveedor">Código Empresa/Persona</label>
+										<input type="text" class="form-control" placeholder="Cliente/Empresa" name="txtCodigoProveedor" id="txtCodigoProveedor" readonly="readonly">
+									</div>
+									<div class="col-12 col-md-12 col-lg-4 mb-1">
+										<label for="estatus">Estatus</label>
+										<select name="lstEstatusProveedor" id="lstEstatusProveedor" class="form-control"></select>																					
+									</div>
+									<div class="col-12 col-md-12 col-lg-4 mb-1 align-self-center">
+										<label for="fecha-creacion">Fecha Creación</label>
+											<div class="input-group mb-1">
+												<div class="input-group-prepend">
+													<span class="input-group-text"><span class="fa fa-calendar"></span></span>
+												</div>
+													<input type="text" name="txtFechaCreacionProveedor" id="txtFechaCreacionProveedor" class="form-control" autocomplete="off">
+												</div>								
+									</div>
+								</div>
+							<!-- NOMBRE DEL EMPRESA -->
+								<div class="form-group row">
+									<div class="col-12 col-md-12 col-lg-12 mb-1">
+										<label for="empresa1">Nombre Empresa/Persona</label>
+											<div class="input-group mb-1">
+												<div class="input-group-prepend">
+													<span class="input-group-text"><span class="fa fa-user"></span></span>
+												</div>
+													<input type="text" name="txtNombreEmpresa" id="txtNombreEmpresa" class="form-control required" maxlength = "80" onchange="conMayusculas(this);" autofocus>
+												</div>
+									</div>
+								</div>
+								<div class="form-group row">
+									<div class="col-12 col-md-12 col-lg-12 mb-1">
+										<span></span>
+										<label for="razon">Razón Social u Otro</label>
+										<input type="text" name="txtNombre" id="txtNombre" class="form-control" maxlength = "80" onchange="conMayusculas(this);">
+										<span class="errorTXT"></span>
+									</div>
+								</div>
+								<!-- DEPARTAMENTO Y MUNICPIO -->
+								<div class="form-group row">
+									<div class="col-12 col-md-12 col-lg-6 mb-1">
+										<div class="input-group mb-1">
+											<div class="input-group-prepend">
+												<span class="input-group-text">Departamento</span>
+											</div>
+											<select name="lstDepartamento" id="lstDepartamento" class="form-control"></select>							
+										</div>
+									</div>
+									<div class="col-12 col-md-12 col-lg-6 mb-1">
+										<div class="input-group mb-1">
+											<div class="input-group-prepend">
+												<span class="input-group-text">Municipio</span>
+											</div>
+											<select name="lstMunicipio" id="lstMunicipio" class="form-control"></select>																					
+										</div>				
+									</div>
+								</div>
+								<!-- NUMERO DE DUI, NIT Y REGISTRO -->
+								<div class="form-group row">
+									<div class="col-12 col-md-12 col-lg-6 mb-1">
+										<div class="input-group mb-1">
+											<div class="input-group-prepend">
+												<span class="input-group-text"><span class="fa fa-hashtag"></span> DUI</span>
+											</div>
+											<input type="text" name="txtDui" id="txtDui" class="form-control" data-toggle="tooltip" data-placement="right" title="Ej. 99999999-9">
+										</div>
+										<div class="input-group mb-1">
+											<div class="input-group-prepend">
+												<span class="input-group-text"><span class="fa fa-hashtag"></span> NIT</span>
+											</div>
+											<input type="text" name="txtNit" id="txtNit" class="form-control" data-toggle="tooltip" data-placement="right" title="Ej. 9999-999999-999-9">
+										</div>
+										<div class="input-group mb-1">
+											<div class="input-group-prepend">
+												<span class="input-group-text"><span class="fa fa-hashtag"></span> Registro</span>
+											</div>
+											<input type="text" name="txtNumeroRegistro" id="txtNumeroRegistro" class="form-control" data-toggle="tooltip" data-placement="right" title="Ej. 999999-9">
+										</div>
+									</div>
+									<div class="col-12 col-md-12 col-lg-6 mb-1">
+										<div class="input-group mb-1">
+											<div class="input-group-prepend">
+												<span class="input-group-text"><span class="fa fa-tty"></span> Empresa</span>
+											</div>
+											<input type="text" name="txtTelefonoResidencia" id="txtTelefonoResidencia" class="form-control" data-toggle="tooltip" data-placement="left" title="Ej. 9999-9999">
+										</div>
+										<div class="input-group mb-1">
+											<div class="input-group-prepend">
+												<span class="input-group-text"><span class="fa fa-tty"></span> Oficina</span>
+											</div>
+											<input type="text" name="txtTelefonoOficina" id="txtTelefonoOficina" class="form-control" data-toggle="tooltip" data-placement="left" title="Ej. 9999-9999">
+										</div>
+										<div class="input-group mb-1">
+											<div class="input-group-prepend">
+												<span class="input-group-text"><span class="fa fa-tty"></span> Celular</span>
+											</div>
+											<input type="text" name="txtTelefonoCelular" id="txtTelefonoCelular" class="form-control" data-toggle="tooltip" data-placement="left" title="Ej. 9999-9999">
+										</div>
+									 </div>
+								</div>
+								<!-- GIRO Y DIRECCI{ON -->
+								<div class="form-group row">
+									<div class="col-12 col-md-12 col-lg-6 mb-1">
+										<label for="giro">Giro</label>
+										<textarea name="txtGiro" id="txtGiro" class="form-control"></textarea>
+									</div>
+									<div class="col-12 col-md-12 col-lg-6 mb-1">
+										<label for="direccion">Dirección</label>
+										<textarea name="txtDireccion" id="txtDireccion" class="form-control"></textarea>
+									</div>
+								</div>
+						</div>
+					</div>
+				</div>
+			</div>
+				<!-- footer modal -->
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-success" id="ActualizarRegistroCliente" value="SiActualizarRegistro">Aceptar</button>
+					<button class="btn btn-default" data-dismiss="modal">Cerrar</button>
+				</div>
+		</form>
+	</div>
+</div>
+</div>
+</div>			
+</div>

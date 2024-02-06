@@ -1,0 +1,14 @@
+archivos a copiar en total son 4.
+**************************************************************************************
+1) layout-facturas-compras.html => copiar en C:\wamp\www\sistema_facturacion\views
+
+2) FacturasCompras.php => copiar en C:\wamp\www\sistema_facturacion\php_libs\soporte
+
+3) factura_compras_informe.php => copiar en C:\wamp\www\sistema_facturacion\php_libs\reportes
+
+4) FacturasCompras.js => copiar en C:\wamp\www\sistema_facturacion\js_libs
+
+****************************************************************************************
+Despues de copiarlos en cada navegador de cada computadora presionar CTRL + F5.
+
+		

@@ -1,0 +1,138 @@
+{# Heredando la plantilla principal #}
+
+
+{% extends 'default_layout.html' %}
+
+{% block extraCSS %}
+
+{% endblock %}
+
+{% block javascripts %}
+    <!-- JS para esta página. -->
+					<script type="text/javascript" src="js_libs/jquery-mask/jquery.inputmask.bundle.js"></script>
+					<script type="text/JavaScript" src="js_libs/CatalogoProveedores.js"></script> <!-- Administrar la Factura Ventas y Detalles Ventas -->
+					<script type="text/JavaScript" src="js_libs/cargar-datos-proveedores.js"></script> <!-- Administrar la Factura Ventas y Detalles Ventas -->
+		<script>
+			// VALIDAR LOS ENTER EN EL FORMULARIO.
+			$(document).ready(function() {
+				$('form').keypress(function(e){   
+				  if(e == 13){
+					return false;
+				  }
+				});
+		  
+				$('input').keypress(function(e){
+				  if(e.which == 13){
+					return false;
+				  }
+				});
+				
+				$("#txtFechaCreacionProveedor").datetimepicker({
+					format: 'DD/MM/YYYY'
+					});
+			});
+		</script>					
+{% endblock %}
+
+{% block contenidos %}
+<div class="container">
+	<div class="row mt-3">
+			<div class="col">
+				<ul class="nav nav-tabs">
+					<li class="nav-item">
+						<a href="#tab1" class="nav-link active" data-toggle="tab"><span class="fa fa-book"></span> Catálogo Proveedores</a>
+					</li>
+				</ul>
+
+				<div class="tab-content">
+					<div class="tab-pane active" id="tab1" role="tabpanel">
+						<!-- ENCABEZADO Y MODIFICACIÓN DE LA FECHA PARA LA FACTURA. -->
+							<div class="row widgets justify-content-between">
+								<div class="col col-md-4 col-lg-2 align-self-start">
+									<h6><i class="fa fa-industry"></i> Empresa/Persona</h6>
+								</div>
+								<div class="col col-md-4 col-lg-2 col-auto ml-auto">
+									<form  action="" method="post" name="form" id="form" role="form">
+										<button type="button" id="NuevoEmpresaPersona" class="btn btn-primary"  data-toggle="tooltip" data-placement="top" title="Nuevo Empresa/Persona"><span class="fa fa-file"></span> Nuevo</button>
+								 </form>
+								</div>
+							</div>
+				<!-- CREACION DE LA TABLA PARA EL INGRESO DE DATOS DESDE AJAX Y PHP. -->
+						<div class="row">
+							<div class="col">
+									<table id="listadoProveedores" class="table table-striped table-hover table-responsive-lg text-dark">
+											<thead>
+												<tr class="bg-secondary text-white">
+														<th>Id</th>
+														<th>Código</th>
+														<th>Empresa</th>
+														<th>Persona Natural o Razón Social</th>
+														<th>Teléfono</th>
+														<th>Teléfono</th>
+														<th></th>
+														<th></th>
+												</tr>
+											</thead>
+											<tbody id="listaUsuariosOK">
+												<!-- Datos que provienen de la consulta con Ajax y PHP. -->
+											</tbody>
+									</table>
+								</div>
+								</div>
+					</div> <!-- tab 1 -->
+				</div> <!-- tab content -->
+			</div> <!-- col -->
+		</div> <!-- row -->
+</div> <!-- container -->
+<!--
+<!--		VENTANA MODAL - ELIMINAR -->
+<div class="row mt-3 text-dark">
+			<div class="col">
+			<div class="modal fade" data-backdrop="static" data-keyboard="false" id="VentanaEliminar" tabindex="-1" role="dialog" aria-labelledby="VentanaEliminar" aria-hidden="true">
+					<div class="modal-dialog modal-md">
+						<div class="modal-content">
+							<div class="modal-header modal-header-warning">
+								<h6 class="modal-title" id=""><span class="fa fa-trash"></span>¿Desea Eliminar El Registro?</h6>
+								<button class="close" data-dismiss="modal" aria-label="Cerrar">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+
+							<div class="modal-body">
+								<div class="container-fluid">
+									<div class="row">
+										<div class="col-12 col-md-12">
+											<p>
+												<h5>Id_: <span class="badge badge-info" for="Id"></span></h5>
+												<h6>Código: <span class="badge badge-info" for="Codigo"></span></h3>
+												<h6>Empresa/Persona: <span class="badge badge-info"  for="EmpresaPersona"></span></h3>
+											</p>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="modal-footer">
+								<button class="btn btn-success" id="BotonEliminarRegistro" value="SiEliminarRegistro">Aceptar</button>
+								<button class="btn btn-default" data-dismiss="modal">Cerrar</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+<!--
+<!-- plantilla que contiene el VentanaClientesEmpresa. -->
+		{% include 'VentanaEmpresaPersona.html' %}
+<!-- plantilla que contiene el menú principal. -->
+		{% include 'layout-loading.html' %}
+{% endblock %}
+
+{% block menu %}
+<!-- plantilla que contiene el menú principal. -->
+		{% include 'layout-menu.html' %}
+{% endblock %}
+ 
+{% block loginUser %}
+	<!--	{% include 'layout-login-user.html' %} -->
+{% endblock %}
