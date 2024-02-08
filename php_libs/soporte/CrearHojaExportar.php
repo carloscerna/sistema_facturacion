@@ -44,6 +44,9 @@ ini_set("memory_limit","1024M");
     use PhpOffice\PhpSpreadsheet\Spreadsheet;
 // call xlsx weriter class to make an xlsx file
     use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+    use PhpOffice\PhpSpreadsheet\Style\Border;
+    use PhpOffice\PhpSpreadsheet\Style\Fill;
+    use PhpOffice\PhpSpreadsheet\Style\Style;
 // Creamos un objeto Spreadsheet object
     $objPHPExcel = new Spreadsheet();
 // Time zone.
@@ -66,6 +69,24 @@ ini_set("memory_limit","1024M");
     $objWorkSheetBase = $objPHPExcel->getSheet(0); 
 // Indicamos que se pare en la hoja uno del libro
     $objPHPExcel->setActiveSheetIndex($n_hoja);
+//  Escribir el año lectivo
+    $yearInventario = $_POST["yearInventario"];
+        $objPHPExcel->getActiveSheet()->SetCellValue("B1", $yearInventario);
+// estilo
+    $sharedStyle2 = new Style();
+    $sharedStyle2->applyFromArray(
+        ['fill' => [
+                    'fillType' => Fill::FILL_SOLID,
+                    'color' => ['argb' => 'ffffffff'],
+                ],
+                'borders' => [
+                    'bottom' => ['borderStyle' => Border::BORDER_THIN],
+                    'right' => ['borderStyle' => Border::BORDER_MEDIUM],
+                ],
+            ]
+    );
+    
+    $objPHPExcel->getActiveSheet()->duplicateStyle($sharedStyle2, 'A4:BI10000');
     //$objPHPExcel->getActiveSheet($n_hoja)->setTitle(cambiar_de_del($print_grado).' '.$print_seccion);
     $n_hoja++;    
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -80,25 +101,44 @@ ini_set("memory_limit","1024M");
 // EJECUAR QUERY PARA LA TABLA PERSONAL.
    $resultado_ = $db_link -> query($query_);
 // RECORRER EL WHILE Y OPTENEER LOS DIFERENTES VALORES.   
-    $num = 0; $fila_excel = 3;
+    $num = 1; $fila_excel = 4;
     while($row = $resultado_ -> fetch(PDO::FETCH_BOTH))
     {
-    // acumular correlativo y fila.
-        $num++; $fila_excel++;
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  	// Variables
-    $codigo = $row['codigo_categoria'] . $row['codigo'];
-    $descripcion = trim($row["descripcion"]);
-    $existencia = ($row["existencia"]);
-    $precio_costo = ($row["precio_costo"]);
-    //  IMPRIMIR EL CONTENIDO DE  INFORMACION EN EXCEL.
-    $objPHPExcel->getActiveSheet()->SetCellValue("A".$fila_excel, $num);
-    $objPHPExcel->getActiveSheet()->setCellValue('B'.$fila_excel,$codigo);
-    //$objPHPExcel->getActiveSheet()->setCellValueExplicit('B'.$fila_excel,$codigo,PHPExcel_Cell_DataType::TYPE_STRING);
-    $objPHPExcel->getActiveSheet()->SetCellValue("C".$fila_excel, $descripcion);
-    $objPHPExcel->getActiveSheet()->SetCellValue("D".$fila_excel, $existencia);
-    $objPHPExcel->getActiveSheet()->SetCellValue("E".$fila_excel, $precio_costo);
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // Variables
+        $codigo = $row['codigo_categoria'] . $row['codigo'];
+        $descripcion = trim($row["descripcion"]);
+        $existencia = ($row["existencia"]);
+        $precio_costo = ($row["precio_costo"]);
+        //  IMPRIMIR EL CONTENIDO DE  INFORMACION EN EXCEL.
+        $objPHPExcel->getActiveSheet()->SetCellValue("A".$fila_excel, $num);
+        $objPHPExcel->getActiveSheet()->setCellValue('B'.$fila_excel,$codigo);
+        //$objPHPExcel->getActiveSheet()->setCellValueExplicit('B'.$fila_excel,$codigo,PHPExcel_Cell_DataType::TYPE_STRING);
+        $objPHPExcel->getActiveSheet()->SetCellValue("C".$fila_excel, $descripcion);
+        $objPHPExcel->getActiveSheet()->SetCellValue("D".$fila_excel, $existencia);
+        $objPHPExcel->getActiveSheet()->SetCellValue("E".$fila_excel, $precio_costo);
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // ESTABLECER FORMULA EN.
+            $FormulaSuma = "=SUM(F" . $fila_excel .":BG".$fila_excel.")";
+            $FormulaSi = "=IF(BH".$fila_excel."=0,D".$fila_excel."*-1,BH".$fila_excel."-D".$fila_excel.")";
+            $objPHPExcel->getActiveSheet()->setCellValue("BH".$fila_excel, $FormulaSuma);
+            $objPHPExcel->getActiveSheet()->setCellValue("BI".$fila_excel, $FormulaSi);
+        // BODERS EN LAS CELDAS
+            //Comprobamos si num es un número par o no
+            if (($fila_excel % 2) == 0) {
+                //Es un número par
+                $RangoColumnas = "A".$fila_excel.":BI".$fila_excel;
+                $objPHPExcel->getActiveSheet()->getStyle($RangoColumnas)->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB('FFAFEEEE');
+                $objPHPExcel->getActiveSheet()->getStyle($RangoColumnas)->getFont()->getColor()->setRGB('FFFFFFFF');
+            } else {
+                //Es un número impar
+                $RangoColumnas = "A".$fila_excel.":BI".$fila_excel;
+                $objPHPExcel->getActiveSheet()->getStyle($RangoColumnas)->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB('FFFFFFFF');
+                $objPHPExcel->getActiveSheet()->getStyle($RangoColumnas)->getFont()->getColor()->setRGB('FF000000');
+            }
+        // acumular correlativo y fila.
+            $num++; $fila_excel++;
+
    }    //  FIN DEL WHILE.
 // PROCESO DE GUARDADO DEL LIBRO SALDOS.
 //
@@ -106,28 +146,37 @@ ini_set("memory_limit","1024M");
     $codigo_tipo_factura = "";
 	// Tipo de Carpeta a Grabar.
 		$codigo_destino = 2;
-		CrearDirectorios($path_root,$year,$codigo_tipo_factura,$codigo_destino,"");
+		CrearDirectorios($path_root,$yearInventario,$codigo_tipo_factura,$codigo_destino,"");
     // nombre del archivo. verificar el tipo.
-    	$nombre_archivo = replace_3("Inventario-".$year.".xlsx");
+    	$nombre_archivo = replace_3("Inventario-".$yearInventario.".xlsx");
     // Guardar el ARchivo Inventario.
-    		$objWriter = new Xlsx($objPHPExcel);
-        $objWriter->save($DestinoArchivo.$nombre_archivo);
+    	//$objWriter = new Xlsx($objPHPExcel);
+        //$objWriter->save($DestinoArchivo.$nombre_archivo);
     
 	try {
+        $respuestaOK = true;
+		$mensajeError = "Archivo Guardado.";
     // Grabar el archivo.
-		$objWriter = new Xlsx($objPHPExcel);
-		$objWriter->save($origen.$nombre_archivo);
+        $objWriter = new Xlsx($objPHPExcel);
+        $objWriter->save($DestinoArchivo.$nombre_archivo);
     // cambiar permisos del archivo antes grabado.
-		chmod($origen.$nombre_archivo,07777);
+		//chmod($origen.$nombre_archivo,07777);
+        // Armamos array para convertir a JSON
+            $salidaJson = array("respuesta" => $respuestaOK,
+            "mensaje" => $mensajeError,
+            "contenido" => $contenidoOK);
+
+            echo json_encode($salidaJson);	
 	}catch(Exception $e){
 		$respuestaOK = false;
-		$mensajeError = "No Save";
+		$mensajeError = "Achivo no guardado.";
 		$contenidoOK = "Error - > ".$e;
-	}
-// Armamos array para convertir a JSON
-$salidaJson = array("respuesta" => $respuestaOK,
-		"mensaje" => $mensajeError,
-		"contenido" => $contenidoOK);
 
-echo json_encode($salidaJson);	
+        // Armamos array para convertir a JSON
+            $salidaJson = array("respuesta" => $respuestaOK,
+            "mensaje" => $mensajeError,
+            "contenido" => $contenidoOK);
+
+            echo json_encode($salidaJson);	
+	}
 ?>

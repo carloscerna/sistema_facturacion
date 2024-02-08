@@ -202,399 +202,412 @@ $(document).ready(function() {
 {% block contenidos %}
 <div class="container">
 	<div class="row mt-3 text-dark">
-			<div class="col">
-				<ul class="nav nav-tabs" role="list">
-					<li class="nav-item">
-					  <a class="nav-link active" href="#ventas" role="tab" data-toggle="tab"><span class="fa">&#xf155;</span> Ventas</a>
-					</li>
-					<li class="nav-item">
-					  <a class="nav-link" href="#inventario" role="tab" data-toggle="tab"><span class="fa fa-book"></span> Inventario</a>
-					</li>
-					<li class="nav-item">
-					  <a class="nav-link" href="#codigo-barra" role="tab" data-toggle="tab"><span class="fa fa-barcode"></span> Generar Códigos de Barra</a>
-					</li>
-					<li class="nav-item">
-					  <a class="nav-link" href="#detalle-producto" role="tab" data-toggle="tab"><span class="fa fa-book"></span> Movimiento de un Producto</a>
-					</li>
-					<li class="nav-item">
-					  <a class="nav-link" href="#inventario-producto" role="tab" data-toggle="tab"><span class="fa fa-book"></span> Inventario Inicial de un Producto</a>
-					</li>
-				  </ul>
-				  
-				  <!-- Tab panes -->
-				  <div class="tab-content">
-					<div role="tabpanel" class="tab-pane in active" id="ventas">
-						<form  action="" method="post" name="formVentasRD" id="formVentasRD" role="form">
-								<!-- ENCABEZADO Y MODIFICACIÓN DE LA FECHA PARA LA FACTURA. -->
-									<div class="form-group row mt-4">
-										<div class="col-12 col-md-6 col-lg-3 mb-3 align-self-left">
-											<span class="label label-default">Resumen Diario de Ventas:</span>
-											<div class="input-group mb-1">
-												<div class="input-group-prepend">
-													<span class="input-group-text">Fecha</span>
-												</div>
-												<input type="text" name="txtFechaVentas" id="txtFechaVentas" class="form-control" autocomplete="off">
-											</div>	
-										</div>
-											
-										<div class="col-12 col-md-6 col-lg-3 mb-3 d-flex align-items-end">
-											<button type="submit" class="btn btn-success" id="goBuscarVentasDiarias" value=""><span class="fa fa-search"></span> Buscar</button>
-										</div>	
-
-										<!-- ENCABEZADO Y MODIFICACIÓN DE LA FECHA PARA RESUMEN DE COMPRAS Y VENTAS. -->
-										<div class="col-12 col-md-6 col-lg-3 mb-3 align-self-left">
-											<span class="label label-default">TOTAL DE COMPRAS Y VENTAS:</span>
-											<div class="input-group mb-1">
-												<div class="input-group-prepend">
-													<span class="input-group-text">Mes y Año</span>
-												</div>
-													<input type="text" name="txtFechaComprasVentas" id="txtFechaComprasVentas" class="form-control" autocomplete="off">
-											</div>	
-										</div>
-											
-										<div class="col-12 col-md-6 col-lg-3 mb-3 d-flex align-items-end">
-											<button type="button" class="btn btn-success" id="goBuscarComprasVentas" value=""><span class="fa fa-search"></span> Buscar</button>
+		<div class="col">
+			<ul class="nav nav-tabs" role="list">
+				<li class="nav-item">
+					<a class="nav-link active" href="#ventas" role="tab" data-toggle="tab"><span class="fa">&#xf155;</span> Ventas</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#inventario" role="tab" data-toggle="tab"><span class="fa fa-book"></span> Inventario</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#codigo-barra" role="tab" data-toggle="tab"><span class="fa fa-barcode"></span> Generar Códigos de Barra</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#detalle-producto" role="tab" data-toggle="tab"><span class="fa fa-book"></span> Movimiento de un Producto</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#inventario-producto" role="tab" data-toggle="tab"><span class="fa fa-book"></span> Inventario Inicial de un Producto</a>
+				</li>
+				</ul>
+				
+				<!-- Tab panes -->
+				<div class="tab-content">
+				<div role="tabpanel" class="tab-pane in active" id="ventas">
+					<form  action="" method="post" name="formVentasRD" id="formVentasRD" role="form">
+							<!-- ENCABEZADO Y MODIFICACIÓN DE LA FECHA PARA LA FACTURA. -->
+								<div class="form-group row mt-4">
+									<div class="col-12 col-md-6 col-lg-3 mb-3 align-self-left">
+										<span class="label label-default">Resumen Diario de Ventas:</span>
+										<div class="input-group mb-1">
+											<div class="input-group-prepend">
+												<span class="input-group-text">Fecha</span>
+											</div>
+											<input type="text" name="txtFechaVentas" id="txtFechaVentas" class="form-control" autocomplete="off">
 										</div>	
 									</div>
-									<!-- PARA EL CONTENIDO DE LAS TABLAS DETALLE DEL MES Y MESES DE COMPRAS. -->
-										<div class="form-group row mt-4">
-											<div class="col-12 col-md-6 col-lg-8 mb-3 align-self-left">
-														<table class="table table-responsive table-striped table-sm" id="ResumenComprasVentas">
-															<thead class="thead-inverse bg-dark text-white table-condensed table-striped">
-																<tr>
-																	<th>N°</th>
-																	<th>Fecha</th>
-																	<th># Factura</th>
-																	<th>Código</th>
-																	<th>Nombre Proveedor</th>
-																	<th>Total Compra $</th>
-																	<th></th>
-																</tr>
-															</thead>
-																<tbody id="listaCompras">
-																</tbody>
-															</table>
-											</div>
-											<div class="col-12 col-md-6 col-lg-4 mb-3 align-self-left">
-														<table class="table table-responsive table-striped table-sm" id="ResumenComprasVentasMeses">
-															<thead class="thead-inverse bg-dark text-white table-condensed table-striped">
-																<tr>
-																	<th>N°</th>
-																	<th>Mes</th>
-																	<th>Total Compra $</th>
-																</tr>
-															</thead>
-																<tbody id="listaComprasMeses">
-																</tbody>
-														</table>
+										
+									<div class="col-12 col-md-6 col-lg-3 mb-3 d-flex align-items-end">
+										<button type="submit" class="btn btn-success" id="goBuscarVentasDiarias" value=""><span class="fa fa-search"></span> Buscar</button>
+									</div>	
 
-														<table class="table table-responsive table-striped table-sm" id="ResumenComprasVentasMeses">
-															<thead class="thead-inverse bg-dark text-white table-condensed table-striped">
-																<tr>
-																	<th>N°</th>
-																	<th>Mes</th>
-																	<th>Total Ventas $</th>
-																</tr>
-															</thead>
-																<tbody id="listaVentasMeses">
-																</tbody>
-														</table>
+									<!-- ENCABEZADO Y MODIFICACIÓN DE LA FECHA PARA RESUMEN DE COMPRAS Y VENTAS. -->
+									<div class="col-12 col-md-6 col-lg-3 mb-3 align-self-left">
+										<span class="label label-default">TOTAL DE COMPRAS Y VENTAS:</span>
+										<div class="input-group mb-1">
+											<div class="input-group-prepend">
+												<span class="input-group-text">Mes y Año</span>
 											</div>
-										</div>
-						</form> <!-- FORM -->
-					</div> <!-- TAB VENTAS -->
-					
-					<div role="tabpanel" class="tab-pane fade" id="inventario">
-						<form  action="" method="post" name="formInventario" id="formInventario" role="form">
-								<!-- ENCABEZADO Y MODIFICACIÓN DE LA FECHA PARA LA FACTURA. -->
+												<input type="text" name="txtFechaComprasVentas" id="txtFechaComprasVentas" class="form-control" autocomplete="off">
+										</div>	
+									</div>
+										
+									<div class="col-12 col-md-6 col-lg-3 mb-3 d-flex align-items-end">
+										<button type="button" class="btn btn-success" id="goBuscarComprasVentas" value=""><span class="fa fa-search"></span> Buscar</button>
+									</div>	
+								</div>
+								<!-- PARA EL CONTENIDO DE LAS TABLAS DETALLE DEL MES Y MESES DE COMPRAS. -->
 									<div class="form-group row mt-4">
-										<div class="col-12 col-md-5 col-lg-4 mb-3 align-self-left">
+										<div class="col-12 col-md-6 col-lg-8 mb-3 align-self-left">
+													<table class="table table-responsive table-striped table-sm" id="ResumenComprasVentas">
+														<thead class="thead-inverse bg-dark text-white table-condensed table-striped">
+															<tr>
+																<th>N°</th>
+																<th>Fecha</th>
+																<th># Factura</th>
+																<th>Código</th>
+																<th>Nombre Proveedor</th>
+																<th>Total Compra $</th>
+																<th></th>
+															</tr>
+														</thead>
+															<tbody id="listaCompras">
+															</tbody>
+														</table>
+										</div>
+										<div class="col-12 col-md-6 col-lg-4 mb-3 align-self-left">
+													<table class="table table-responsive table-striped table-sm" id="ResumenComprasVentasMeses">
+														<thead class="thead-inverse bg-dark text-white table-condensed table-striped">
+															<tr>
+																<th>N°</th>
+																<th>Mes</th>
+																<th>Total Compra $</th>
+															</tr>
+														</thead>
+															<tbody id="listaComprasMeses">
+															</tbody>
+													</table>
+
+													<table class="table table-responsive table-striped table-sm" id="ResumenComprasVentasMeses">
+														<thead class="thead-inverse bg-dark text-white table-condensed table-striped">
+															<tr>
+																<th>N°</th>
+																<th>Mes</th>
+																<th>Total Ventas $</th>
+															</tr>
+														</thead>
+															<tbody id="listaVentasMeses">
+															</tbody>
+													</table>
+										</div>
+									</div>
+					</form> <!-- FORM -->
+				</div> <!-- TAB VENTAS -->
+				
+				<div role="tabpanel" class="tab-pane fade" id="inventario">
+				<!-- ENCABEZADO Y MODIFICACIÓN DE LA FECHA PARA LA FACTURA. -->
+				<div class="row">
+					<div class="col">
+					<form  action="" method="post" name="formInventario" id="formInventario" role="form">
+						<div class="card border-primary">
+							<div class="card-header">Puede obtener un informe del Inventario según rango de fecha.</div>
+							<div class="card-body text-primary">
+							  <h5 class="card-title"></h5>
+								<div class="col col-md-12">
+									<div class="form-group row mt-4">
+										<div class="col col-md-5 align-self-left">
 											<div class="input-group mb-1">
 												<div class="input-group-prepend">
 													<span class="input-group-text">Fecha Inicio</span>
 												</div>
-												<input type="text" name="txtFechaInicio" id="txtFechaInicio" class="form-control" required>
+												<input type="text" name="txtFechaInicio" id="txtFechaInicio" class="form-control" required aria-label="Fecha">
 											</div>	
 										</div>
-
-										<div class="col-12 col-md-5 col-lg-4 mb-3 align-self-left">
+										<div class="col col-md-5 align-self-left">
 											<div class="input-group mb-1">
 												<div class="input-group-prepend">
 													<span class="input-group-text">Fecha Fin</span>
 												</div>
-												<input type="text" name="txtFechaFin" id="txtFechaFin" class="form-control" required>
+												<input type="text" name="txtFechaFin" id="txtFechaFin" class="form-control" required aria-label="FechaFin">
 											</div>	
 										</div>
-										<label class="checkbox-inline"><input type="checkbox" id="actualizar_existencia" value="0" title="Activar Para Actualizar las Existencias"> Actualizar Existencias</label>
-									</div>
-									
-									<div class="form-group row mt-2">
-										<div class="col-12 col-md-4 col-lg-4 mb-3 align-self-left">
-											<button type="button" class="btn btn-primary" id="goBuscarInventario" value="">Detalle por Producto</button>
-										</div>
-										<div class="col-12 col-md-4 col-lg-4 mb-3 align-self-left">
-											<button type="button" class="btn btn-secondary" id="goBuscarInventarioProducto" value="">Consolidado Por Producto</button>
+										<div class="col col-md-2 align-self-left">
+											<label class="checkbox-inline"><input type="checkbox" id="actualizar_existencia" value="0" title="Activar Para Actualizar las Existencias"> Actualizar Existencias</label>
 										</div>
 									</div>
-									
-									<!-- FORM  - CREAR ARCHIVO PARA EL INVENTARIO-->									
-									 <!-- Horizontal Form -->
-									 <div class="row">
-										<div class="col-12 col-md-4 col-lg-4 mb-3 align-self-left">
-										<div class="card card-info">
-										  <div class="card-header">
-											<h5 class="card-title">Crear Hoja de Inventario.</h5>
-										  </div>
-										 <!-- /.card-header -->
-										 <!-- form start -->
-										 <form class="form-horizontal" action="" method="post" id="formEa" name="formEa" role="form">
+								</div>
+							</div>
+							<div class="card-footer d-flex justify-content-center bg-dark">
+									<button type="button" class="btn btn-primary" id="goBuscarInventario" value="">Detalle por Producto</button>
+									<button type="button" class="btn btn-secondary" id="goBuscarInventarioProducto" value="">Consolidado Por Producto</button>
+							</div>
+						  </div>
+					</form>
+				</div>
+				</div>
+					<!-- FORM  - CREAR ARCHIVO PARA EL INVENTARIO-->									
+						<!-- Horizontal Form -->
+						<div class="row">
+							<div class="col col-md-3">
+								<div class="card card-info">
+									<div class="card-header bg-info">
+									<h5 class="card-title text-white">1. Crear Hoja de Inventario.</h5>
+									</div>
+									<!-- /.card-header -->
+									<!-- form start -->
+										<form class="form-horizontal" action="" method="post" id="formEa" name="formEa" role="form">
 											<!--- incio del card. -->
 											<div class="card-body">
-													<p>Permite Crear El Archivo de Hoja de Cálculo, el cual se utilizará para el ingreso de datos del Inventario Físico.</p>
+												<p>Permite Crear El Archivo de Hoja de Cálculo, el cual se utilizará para el ingreso de datos del Inventario Físico.</p>
+												<label for="">Año:
+													<select class="custom-select" name="lstFechaAño" id="lstFechaAño"></select>
+												</label>
+													
 											</div>
 											<!-- /.card-body -->
-											<div class="card-footer d-flex justify-content-center">
-												   <div class="form-group row">
-														<button type="button" class="btn btn-secondary" id="goCrearInventarioProducto" value="">Crear..</button>
-												   </div>
+											<div class="card-footer d-flex justify-content-center bg-dark">
+												<div class="form-group row text-white">
+													<button type="button" class="btn btn-primary" id="goCrearInventarioProducto" value="" title="Crear Archivo" data-toggle="Crear Archivo">
+														<span><i class="fal fa-file-excel"></i></span>
+													</button>
+												</div>
 											</div>
 											<!-- /.card-footer -->
-										  </form>
-										</div>	
-										</div>
-
-										<div class="col-12 col-md-8 col-lg-8 mb-3 align-self-left">
-												<!-- FORM  - ACTUALIZAR ARCHIVO DESDE LA HOJA DE CLACULO ANTES CREADA.-->
-											<div class="card card-info">
-												<div class="card-header">
-												  <h5 class="card-title">Actualizar Hoja de Inventario.</h5>
-												</div>
-											   <!-- /.card-header -->
-											   <!-- form start -->
-											   <form class="form-horizontal" action="" method="post" id="formIA" name="formIA" role="form">
-												  <!--- incio del card. -->
-												  <div class="card-body">
-													<p>Permite Actualizar el Archivo de Inventario con la toma de existencia física.</p>
-
-														<!-- MODAL BODY ROW 
-														--><div class="modal-body row">
-														   <div class="col">
-															  <div class="file-loading">
-																  <input id="file-es" name="file-es[]" type="file" multiple accept="image">
-															  </div>
-															  <SMALL class="form-text text-muted">Seleccionar archivos de Office 201X: xlsx hasta un máximo de 5.</SMALL>
-															  <p>&nbsp;</p>
-															  <div class="alert alert-success" role="alert"></div>
-															 </div>
-															</div>
-														<!-- BOTON DE ACTUALIZAR ARCHIVOS Y BARRA DE PROGRESO. -->
-															<div class="modal-body row">
-															 <div class="col-md-12">
-															  <div>
-															   <button type="button" id="goActualizarDirectorio" class="btn btn-success">
-																  <span class="fas fa-list"></span> Actualizar Archivos del Directorio ../files/
-															   </button>
-															  </div>
-															  
-															 </div>
-															</div>
-															<!-- TABLA CON LOS DATOS DE LOS ARCHIVOS SUBIDOS. -->  
-																<table id="listadoArchivo" class="table table-striped table-bordered table-hover table-condensed">
-																   <thead>
-																	<tr>
-																	 <th>Nombre de Archivos</th>
-																	 <th colspan="2">Acción</th>
-																	</tr>
-																   </thead>
-																	<tbody id="listaArchivosOK">
-																  
-																	</tbody>                            
-																  <tfoot>
-																  </tfoot>
-															   </table>
-												  </div>
-
-												  <!-- /.card-body -->
-												  <div class="card-footer d-flex justify-content-center">												
-														 <div class="form-group row">
-															<!-- <button type="button" class="btn btn-secondary" id="goActualizarInventarioProducto" value="">Actualizar...</button> -->
-														 </div>
-												  </div>
-												  <!-- /.card-footer -->
-												</form>
-										</div>
-									 	</div>
-									 </div>
-						</form> <!-- FORM -->						
-					</div> <!-- TAB INVENTARIO -->
-					<!-- TABPANEL CODIGO DE BARRAS. -->
-					<div role="tabpanel" class="tab-pane fade" id="codigo-barra">
-						<form  action="" method="post" name="formCodigosBarra" id="formCodigosBarra" role="form">
-								<!-- ENCABEZADO Y MODIFICACIÓN DE LA FECHA PARA LA FACTURA. -->
-									<div class="form-group row mt-4">
-										<div class="col-12 col-md-6 col-lg-6 mb-3 d-flex justify-content-start">
-												<button type="button" class="btn btn-primary" id="BotonBuscarProducto"><span class="fa fa-list"></span> Catálogo Productos</button>
-												<button type="button" class="btn btn-info" id="BotonVerProducto"><span class="fa fa-search"></span> Ver Productos</button>
-												<button type="button" class="btn btn-warning" id="BotonEliminarTodosProductos"><span class="fa fa-trash"></span> Eliminar Todos</button>
-										</div>
-											
-										<div class="col-12 col-md-6 col-lg-6 mb-3 d-flex justify-content-end">
-											<button type="button" class="btn btn-secondary" id="goCrearCodigosBarra" value=""><span class="fa fa-print"></span> Crear</button>
-										</div>	
+										</form>
+								</div>	
+							</div>
+							<div class="col col-md-9">
+									<!-- FORM  - ACTUALIZAR ARCHIVO DESDE LA HOJA DE CLACULO ANTES CREADA.-->
+								<div class="card">
+									<div class="card-header bg-info">
+										<h5 class="card-title text-white">2. Actualizar Hoja de Inventario.</h5>
 									</div>
-									
-									<!-- Crear la Tabla -->
-									<div class="form-group row mt-4">
-										<table class="table">
-											<thead class="thead-dark">
-											  <tr>
-												<th scope="col">#</th>
-												<th scope="col">Id</th>
-												<th scope="col">Código</th>
-												<th scope="col">Descripción</th>
-												<th scope="col">Cantidad</th>
-												<th scope="col" colspan="2">Acción</th>
-											  </tr>
-											</thead>
-											<tbody id="listaProductosTemp">
-												
-											</tbody>
-										</table>
-									</div>
-									
-						</form> <!-- FORM -->						
-					</div> <!-- TAB CODIGOS DE BARRA -->
-					<!-- TABPANEL MOVIMIENTOS DE UN PRODUCTO. -->
-					<div role="tabpanel" class="tab-pane fade" id="detalle-producto">
-						<form  action="" method="post" name="formDetalleProducto" id="formDetalleProducto" role="form">
-								<!-- ENCABEZADO Y MODIFICACIÓN DE LA FECHA PARA LA FACTURA. -->
-									<div class="form-group row mt-2">
-										<div class="col-12 col-md-5 col-lg-4 mb-3 align-self-left">
-											<div class="input-group mb-1">
-												<div class="input-group-prepend">
-													<span class="input-group-text">Fecha Inicio</span>
-												</div>
-												<input type="text" name="txtFechaInicioDetalle" id="txtFechaInicioDetalle" class="form-control" required>
-											</div>	
-										</div>
-
-										<div class="col-12 col-md-5 col-lg-4 mb-3 align-self-left">
-											<div class="input-group mb-1">
-												<div class="input-group-prepend">
-													<span class="input-group-text">Fecha Fin</span>
-												</div>
-												<input type="text" name="txtFechaFinDetalle" id="txtFechaFinDetalle" class="form-control" required>
-											</div>	
-										</div>	
-									</div>
-									
-								<!-- Seleccionar Tabla Ajuste o Detalle de Compray Ventas. -->
-										<div>
-											<div class="col-12 col-md-5 col-lg-4 mb-3 align-self-left">
-												<label>Origen de la información:</label>
-												<select name="tabla1" id="tabla1" class="form-control">
-													<option value="ajuste" selected>Tabla Ajuste</option>
-													<option value="detalle-venta">Tabla Ventas-Compras</option>
-												</select>
+									<!-- /.card-header -->
+									<!-- form start -->
+									<div class="card-body">
+										<form class="form-horizontal" action="" method="post" id="formIA" name="formIA" role="form">
+											<!--- incio del card. -->
+											<div class="card-body">
+												<p>Permite Actualizar el Archivo de Inventario con la toma de existencia física.</p>
+													<div class="file-loading form-control-sm">
+														<input id="file-es" name="file-es[]" type="file" multiple accept="image" aria-label="FileArchivo">
+													</div>
+													<small class="form-text text-muted">Seleccionar archivos de Office 201X: xlsx hasta un máximo de 5.</small>
+													<p>&nbsp;</p>
+														<div class="alert alert-success" role="alert"></div>
 											</div>
-										</div>
-									
-									<div class="form-group row mt-2">
-										<div class="col-12 col-md-6 col-lg-6 mb-3 d-flex justify-content-start">
-												<button type="button" class="btn btn-primary" id="BotonBuscarDetalleProducto"><span class="fa fa-search"></span> Catálogo Productos</button>
-										</div>
-									</div>
-									
-									<!-- Crear la Tabla -->
-									<div class="form-group row mt-2">
-										<table class="table">
-											<thead class="thead-dark">
-												<tr>
-													<td></td>	<!-- # -->
-													<td></td> 	<!-- Id oculto -->
-													<td></td>	<!-- Fecha -->
-													<td></td>	<!-- Código Producto -->
-													<td></td>	<!-- Descripcion -->
-													<td></td>	<!-- Proveedor/Cliente -->
-													<th scope="col" colspan="1" style="text-align: center;">Unidades</th>	<!-- Unidades -->
-													<td></td>	<!-- Existencia -->
-												</tr>
-											  <tr>
-												<th scope="col">#</th>
-												<th></th>
-												<th scope="col">Fecha</th>
-												<th scope="col">Código Producto</th>
-												<th scope="col">Descripción del Producto</th>
-												<th>Descripción</th>
-												<th scope="col" style="text-align: center;">Ajuste</th>
-												<th colspan="2">Acción</th>
-											  </tr>
-											</thead>
-											<tbody id="listaDetalleProducto">
-												
-											</tbody>
-										</table>
-									</div>
-									
-						</form> <!-- FORM -->						
-					</div> <!-- TAB MOVIMIENTO DE UN PRODUCTO -->
-					<!-- TABPANEL INVENTARIO DE UN PRODUCTO. -->
-					<div role="tabpanel" class="tab-pane fade" id="inventario-producto">
-						<form  action="" method="post" name="formInventarioProducto" id="formInventarioProducto" role="form">
-								<!-- ENCABEZADO Y MODIFICACIÓN DE LA FECHA PARA LA FACTURA. -->
-									<div class="form-group row mt-2">
-										<div class="col-12 col-md-5 col-lg-4 mb-3 align-self-left">
-											<div class="input-group mb-1">
-												<div class="input-group-prepend">
-													<span class="input-group-text">Fecha</span>
+											<div class="card-footer d-flex justify-content-center bg-dark">
+												<div class="form-group row text-white">
+													
 												</div>
-												<input type="text" name="txtFechaInventarioProducto" id="txtFechaInventarioProducto" class="form-control" required>
-											</div>	
-										</div>
-
+											</div>
+										</form>
 									</div>
-									
-									<div class="form-group row mt-2">
-										<div class="col-12 col-md-6 col-lg-6 mb-3 d-flex justify-content-start">
-												<button type="button" class="btn btn-primary" id="BotonBuscarInventarioProducto"><span class="fa fa-search"></span> Productos</button>
-										</div>
+								</div>
+							</div>
+							<!-- BOTON DE ACTUALIZAR ARCHIVOS Y BARRA DE PROGRESO. -->
+							<div class="col col-md-12">
+								<div class="card">
+									<div class="card-header bg-info">
+										<h5 class="card-title text-white">3. Listado de Archivos a Actualizar.</h5>
 									</div>
-									
-									<!-- Crear la Tabla -->
-									<div class="form-group row mt-2">
-										<table class="table">
-											<thead class="thead-dark">
+									<!-- /.card-header -->
+									<!-- form start -->
+									<div class="card-body">
+										<table id="listadoArchivo" class="table table-striped table-bordered table-hover table-condensed">
+											<thead>
 												<tr>
-													<td></td>	<!-- # -->
-													<td></td> 	<!-- Id oculto -->
-													<td></td>	<!-- Fecha -->
-													<td></td>	<!-- Código Producto -->
-													<td></td>	<!-- Descripcion -->
-													<td></td>	<!-- Proveedor/Cliente -->
-													<td></td>	<!-- Unidades -->
-													<td></td>	<!-- Existencia -->
-												</tr>
-											  <tr>
-												<th scope="col">#</th>
-												<th></th>
-												<th scope="col">Fecha</th>
-												<th scope="col">Código Producto</th>
-												<th scope="col">Descripción del Producto</th>
-												<th scope="col">Cantidad</th>
-												<th scope="col">Precio</th>
+												<th>Nombre de Archivos</th>
 												<th colspan="2">Acción</th>
-											  </tr>
+												</tr>
 											</thead>
-											<tbody id="listaInventarioProducto">
-												
-											</tbody>
+												<tbody id="listaArchivosOK">
+											
+												</tbody>                            
+											<tfoot>
+											</tfoot>
 										</table>
 									</div>
-									
-						</form> <!-- FORM -->						
-					</div> <!-- TAB INVENTARIO DE UN PRODUCTO -->
-				  </div> <!-- TAB CONTENT -->
-			</div> <!-- col -->
+									<!-- /.card-body -->
+									<div class="card-footer d-flex justify-content-center bg-dark">												
+										<button type="button" id="goActualizarDirectorio" class="btn btn-success">
+											<span class="fas fa-list"></span> Actualizar Archivos del Directorio ../files/
+										</button>
+									</div> 	<!-- /.card-footer -->
+								</div> <!-- /.card -->
+							<div>
+						</div>
+							</div>
+						</div>
+				</div> <!-- TAB INVENTARIO -->
+				<!-- TABPANEL CODIGO DE BARRAS. -->
+				<div role="tabpanel" class="tab-pane fade" id="codigo-barra">
+					<form  action="" method="post" name="formCodigosBarra" id="formCodigosBarra" role="form">
+							<!-- ENCABEZADO Y MODIFICACIÓN DE LA FECHA PARA LA FACTURA. -->
+								<div class="form-group row mt-4">
+									<div class="col-12 col-md-6 col-lg-6 mb-3 d-flex justify-content-start">
+											<button type="button" class="btn btn-primary" id="BotonBuscarProducto"><span class="fa fa-list"></span> Catálogo Productos</button>
+											<button type="button" class="btn btn-info" id="BotonVerProducto"><span class="fa fa-search"></span> Ver Productos</button>
+											<button type="button" class="btn btn-warning" id="BotonEliminarTodosProductos"><span class="fa fa-trash"></span> Eliminar Todos</button>
+									</div>
+										
+									<div class="col-12 col-md-6 col-lg-6 mb-3 d-flex justify-content-end">
+										<button type="button" class="btn btn-secondary" id="goCrearCodigosBarra" value=""><span class="fa fa-print"></span> Crear</button>
+									</div>	
+								</div>
+								
+								<!-- Crear la Tabla -->
+								<div class="form-group row mt-4">
+									<table class="table">
+										<thead class="thead-dark">
+											<tr>
+											<th scope="col">#</th>
+											<th scope="col">Id</th>
+											<th scope="col">Código</th>
+											<th scope="col">Descripción</th>
+											<th scope="col">Cantidad</th>
+											<th scope="col" colspan="2">Acción</th>
+											</tr>
+										</thead>
+										<tbody id="listaProductosTemp">
+											
+										</tbody>
+									</table>
+								</div>
+								
+					</form> <!-- FORM -->						
+				</div> <!-- TAB CODIGOS DE BARRA -->
+				<!-- TABPANEL MOVIMIENTOS DE UN PRODUCTO. -->
+				<div role="tabpanel" class="tab-pane fade" id="detalle-producto">
+					<form  action="" method="post" name="formDetalleProducto" id="formDetalleProducto" role="form">
+							<!-- ENCABEZADO Y MODIFICACIÓN DE LA FECHA PARA LA FACTURA. -->
+								<div class="form-group row mt-2">
+									<div class="col-12 col-md-5 col-lg-4 mb-3 align-self-left">
+										<div class="input-group mb-1">
+											<div class="input-group-prepend">
+												<span class="input-group-text">Fecha Inicio</span>
+											</div>
+											<input type="text" name="txtFechaInicioDetalle" id="txtFechaInicioDetalle" class="form-control" required>
+										</div>	
+									</div>
+
+									<div class="col-12 col-md-5 col-lg-4 mb-3 align-self-left">
+										<div class="input-group mb-1">
+											<div class="input-group-prepend">
+												<span class="input-group-text">Fecha Fin</span>
+											</div>
+											<input type="text" name="txtFechaFinDetalle" id="txtFechaFinDetalle" class="form-control" required>
+										</div>	
+									</div>	
+								</div>
+								
+							<!-- Seleccionar Tabla Ajuste o Detalle de Compray Ventas. -->
+									<div>
+										<div class="col-12 col-md-5 col-lg-4 mb-3 align-self-left">
+											<label>Origen de la información:</label>
+											<select name="tabla1" id="tabla1" class="form-control">
+												<option value="ajuste" selected>Tabla Ajuste</option>
+												<option value="detalle-venta">Tabla Ventas-Compras</option>
+											</select>
+										</div>
+									</div>
+								
+								<div class="form-group row mt-2">
+									<div class="col-12 col-md-6 col-lg-6 mb-3 d-flex justify-content-start">
+											<button type="button" class="btn btn-primary" id="BotonBuscarDetalleProducto"><span class="fa fa-search"></span> Catálogo Productos</button>
+									</div>
+								</div>
+								
+								<!-- Crear la Tabla -->
+								<div class="form-group row mt-2">
+									<table class="table">
+										<thead class="thead-dark">
+											<tr>
+												<td></td>	<!-- # -->
+												<td></td> 	<!-- Id oculto -->
+												<td></td>	<!-- Fecha -->
+												<td></td>	<!-- Código Producto -->
+												<td></td>	<!-- Descripcion -->
+												<td></td>	<!-- Proveedor/Cliente -->
+												<th scope="col" colspan="1" style="text-align: center;">Unidades</th>	<!-- Unidades -->
+												<td></td>	<!-- Existencia -->
+											</tr>
+											<tr>
+											<th scope="col">#</th>
+											<th></th>
+											<th scope="col">Fecha</th>
+											<th scope="col">Código Producto</th>
+											<th scope="col">Descripción del Producto</th>
+											<th>Descripción</th>
+											<th scope="col" style="text-align: center;">Ajuste</th>
+											<th colspan="2">Acción</th>
+											</tr>
+										</thead>
+										<tbody id="listaDetalleProducto">
+											
+										</tbody>
+									</table>
+								</div>
+								
+					</form> <!-- FORM -->						
+				</div> <!-- TAB MOVIMIENTO DE UN PRODUCTO -->
+				<!-- TABPANEL INVENTARIO DE UN PRODUCTO. -->
+				<div role="tabpanel" class="tab-pane fade" id="inventario-producto">
+					<form  action="" method="post" name="formInventarioProducto" id="formInventarioProducto" role="form">
+							<!-- ENCABEZADO Y MODIFICACIÓN DE LA FECHA PARA LA FACTURA. -->
+								<div class="form-group row mt-2">
+									<div class="col-12 col-md-5 col-lg-4 mb-3 align-self-left">
+										<div class="input-group mb-1">
+											<div class="input-group-prepend">
+												<span class="input-group-text">Fecha</span>
+											</div>
+											<input type="text" name="txtFechaInventarioProducto" id="txtFechaInventarioProducto" class="form-control" required>
+										</div>	
+									</div>
+
+								</div>
+								
+								<div class="form-group row mt-2">
+									<div class="col-12 col-md-6 col-lg-6 mb-3 d-flex justify-content-start">
+											<button type="button" class="btn btn-primary" id="BotonBuscarInventarioProducto"><span class="fa fa-search"></span> Productos</button>
+									</div>
+								</div>
+								
+								<!-- Crear la Tabla -->
+								<div class="form-group row mt-2">
+									<table class="table">
+										<thead class="thead-dark">
+											<tr>
+												<td></td>	<!-- # -->
+												<td></td> 	<!-- Id oculto -->
+												<td></td>	<!-- Fecha -->
+												<td></td>	<!-- Código Producto -->
+												<td></td>	<!-- Descripcion -->
+												<td></td>	<!-- Proveedor/Cliente -->
+												<td></td>	<!-- Unidades -->
+												<td></td>	<!-- Existencia -->
+											</tr>
+											<tr>
+											<th scope="col">#</th>
+											<th></th>
+											<th scope="col">Fecha</th>
+											<th scope="col">Código Producto</th>
+											<th scope="col">Descripción del Producto</th>
+											<th scope="col">Cantidad</th>
+											<th scope="col">Precio</th>
+											<th colspan="2">Acción</th>
+											</tr>
+										</thead>
+										<tbody id="listaInventarioProducto">
+											
+										</tbody>
+									</table>
+								</div>
+								
+					</form> <!-- FORM -->						
+				</div> <!-- TAB INVENTARIO DE UN PRODUCTO -->
+				</div> <!-- TAB CONTENT -->
+		</div> <!-- col -->
 		</div> <!-- row -->
 </div> <!-- container -->
 <!-- plantilla que contiene el Ventana Buscar Producto. -->
@@ -648,7 +661,7 @@ $(document).ready(function() {
 	data-keyboard="false">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
-		<div class="modal-header">
+		<div class="modal-header bg-info">
 			<h5 class="modal-title" id="exampleModalLabel"><label for="VerificarActualizar"></label></h5>
 		</div>
 		<div class="modal-body">
@@ -656,7 +669,7 @@ $(document).ready(function() {
 			<img src="img/ajax-loader.gif" width="45" height="45" alt="Loading...">
 			</div>
 		</div>
-		<div class="modal-footer">
+		<div class="modal-footer bg-dark text-white">
 			<label for="NombreArchivo">Nombre del Archivo.</label>
 		</div>
 		</div>

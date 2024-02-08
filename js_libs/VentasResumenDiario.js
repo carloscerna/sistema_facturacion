@@ -2,12 +2,15 @@ $(document).ready(function () {
 ///////////////////////////////////////////////////////////////////////////////
 // CONFIGURACIÓND E LA FECHA, Y PASAR A CIERTOS OBJETOS.
 ///////////////////////////////////////////////////////////////////////////////
+$(document).ready(function(){
+	listar_ann(year);
+});
                 var now = new Date();
                 
                 var day = ("0" + now.getDate()).slice(-2);
                 var month = ("0" + (now.getMonth() + 1)).slice(-2);
                 ann = now.getFullYear();
-                
+                var year = now.getFullYear();
                 var today = (day)+"/"+(month)+"/"+now.getFullYear() ;
 				var mesYanno = (month)+"/"+now.getFullYear() ;
                 // 
@@ -188,7 +191,9 @@ $('#goActualizarInventarioProducto').on( 'click', function () {
 ///////////////////////////////////////////////////////////////////////////////	  
 $('#goCrearInventarioProducto').on( 'click', function () {
 	// ACTUALIZA EL ARCHVIO DE LA HOJA DE CALCULO LA CUAL CONTIENE EL VALOR DEL AJUSTE DEL INVENTARIO.
-	var nombre_archivo = "Inventario Exportar";
+		var nombre_archivo = "Inventario Exportar";
+	// Año del inventario.
+		yearInventario = $("#lstFechaAño").val();
 		Pace.track(function(){
 				$.ajax({
 		            beforeSend: function(){
@@ -197,22 +202,23 @@ $('#goCrearInventarioProducto').on( 'click', function () {
 						// valores a la consola
 							console.log("Creando Archivo: " + nombre_archivo);
 							$("label[for='NombreArchivo']").text(nombre_archivo);
-							$("label[for='VerificarActualizar']").text("Verificando...");
+							$("label[for='VerificarActualizar']").text("Creando Archivo...");
 		            },
 		            cache: false,
 		            type: "POST",
 		            dataType: "json",
                     url:"php_libs/soporte/CrearHojaExportar.php",
+					data:{yearInventario: yearInventario},
 		            success: function(response){
 		            	// Validar mensaje de error
                         // Si el valor si existe compararlo con mensaje error.
-                           if (response.mensaje == "Si Registro") {
-                                toastr.success("Registro(s) Actualizado(s).");
-								console.log("Archivo Creado...");
+                           if (response.respuesta == true) {
+								toastr["success"](response.mensaje, "Sistema Facturación.");
+								//console.log("Archivo Creado...");
                            }                                                
-                           if (response.mensaje == "No Registro") {
-                                toastr.info("Registro(s) No Encontrados(s).");
-								console.log("Archivo No Creado...");
+                           if (response.respuesta == false) {
+                                toastr["info"](response.mensaje, "Sistema Facturación.");
+								//console.log("Archivo No Creado...");
                            }
 					},
 					error: function(){
@@ -331,4 +337,23 @@ function AbrirVentana(url)
 {
     window.open(url, '_blank');
     return false;
+}
+// FUNCION LISTAR TABLA catalogo_ruta
+////////////////////////////////////////////////////////////
+function listar_ann(codigo_ann){
+    var miselect=$("#lstFechaAño");
+    /* VACIAMOS EL SELECT Y PONEMOS UNA OPCION QUE DIGA CARGANDO... */
+    miselect.find('option').remove().end().append('<option value="">Cargando...</option>').val('');
+    
+    $.post("includes/cargar_ann.php", 
+        function(data) {
+            miselect.empty();
+            for (var i=0; i<data.length; i++) {
+                if(codigo_ann == data[i].codigo){
+                    miselect.append('<option value="' + data[i].codigo + '" selected>' + data[i].descripcion + '</option>');
+                }else{
+                    miselect.append('<option value="' + data[i].codigo + '">' + data[i].descripcion + '</option>');
+                }
+            }
+    }, "json");    
 }
