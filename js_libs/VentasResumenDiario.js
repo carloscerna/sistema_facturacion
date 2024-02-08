@@ -185,48 +185,7 @@ $('#goActualizarInventarioProducto').on( 'click', function () {
 		        });	
 		});
 });
-///////////////////////////////////////////////////////////////////////////////
-// ACTUALIZAR EL ARCHIVO DE INVENTARIO AJUSTE AGOSTO.
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////	  
-$('#goCrearInventarioProducto').on( 'click', function () {
-	// ACTUALIZA EL ARCHVIO DE LA HOJA DE CALCULO LA CUAL CONTIENE EL VALOR DEL AJUSTE DEL INVENTARIO.
-		var nombre_archivo = "Inventario Exportar";
-	// Año del inventario.
-		yearInventario = $("#lstFechaAño").val();
-		Pace.track(function(){
-				$.ajax({
-		            beforeSend: function(){
-						// mostra rel modal. que contiene el mensaje del nombre del archivo y mensajes de veririvación o actualización.
-						$('#myModal').modal('show');
-						// valores a la consola
-							console.log("Creando Archivo: " + nombre_archivo);
-							$("label[for='NombreArchivo']").text(nombre_archivo);
-							$("label[for='VerificarActualizar']").text("Creando Archivo...");
-		            },
-		            cache: false,
-		            type: "POST",
-		            dataType: "json",
-                    url:"php_libs/soporte/CrearHojaExportar.php",
-					data:{yearInventario: yearInventario},
-		            success: function(response){
-		            	// Validar mensaje de error
-                        // Si el valor si existe compararlo con mensaje error.
-                           if (response.respuesta == true) {
-								toastr["success"](response.mensaje, "Sistema Facturación.");
-								//console.log("Archivo Creado...");
-                           }                                                
-                           if (response.respuesta == false) {
-                                toastr["info"](response.mensaje, "Sistema Facturación.");
-								//console.log("Archivo No Creado...");
-                           }
-					},
-					error: function(){
-						console.log("Error...");
-					}
-		        });	
-		});
-});
+
 ///////////////////////////////////////////////////////////////////////////////
 // LLAMAR AL REPORTE QUE VA MOSTRAR EL INVENTARIO.
 ///////////////////////////////////////////////////////////////////////////////

@@ -9,16 +9,16 @@
 //
 // Establecer formato para la fecha.
 // 
-		date_default_timezone_set('America/El_Salvador');
-		setlocale(LC_TIME,'es_SV');
-	    //
-		//$dias = array("Domingo","Lunes","Martes","Miercoles","Jueves","Viernes","Sábado");
-        $meses = array("enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre");
-                //Salida: Viernes 24 de Febrero del 2012		
-		//Crear una línea. Fecha.
-		$dia = strftime("%d");		// El Día.
+    date_default_timezone_set('America/El_Salvador');
+    setlocale(LC_TIME,'es_SV');
+    //
+    //$dias = array("Domingo","Lunes","Martes","Miercoles","Jueves","Viernes","Sábado");
+    $meses = array("enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre");
+            //Salida: Viernes 24 de Febrero del 2012		
+    //Crear una línea. Fecha.
+    //$dia = strftime("%d");		// El Día.
     $mes = $meses[date('n')-1];     // El Mes.
-		$año = strftime("%Y");		// El Año.
+    //$año = strftime("%Y");		// El Año.
     $year = $año;
     //$dato = explode("/",$fecha_inicio);
     //$dato_entero = (int)$dato[1];
