@@ -16,9 +16,9 @@
     $meses = array("enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre");
             //Salida: Viernes 24 de Febrero del 2012		
     //Crear una línea. Fecha.
-    //$dia = strftime("%d");		// El Día.
+    $dia = strftime("%d");		// El Día.
     $mes = $meses[date('n')-1];     // El Mes.
-    //$año = strftime("%Y");		// El Año.
+    $año = strftime("%Y");		// El Año.
     $year = $año;
     //$dato = explode("/",$fecha_inicio);
     //$dato_entero = (int)$dato[1];
@@ -53,7 +53,7 @@ ini_set("memory_limit","1024M");
     //echo date('H:i:s') . " Set Time Zone"."<br />";
     date_default_timezone_set('America/El_Salvador');
 // set codings.
-//    $objPHPExcel->_defaultEncoding = 'ISO-8859-1';
+    $objPHPExcel->_defaultEncoding = 'ISO-8859-1';
 // Set default font
     //echo date('H:i:s') . " Set default font"."<br />";
     $objPHPExcel->getDefaultStyle()->getFont()->setName('Arial');

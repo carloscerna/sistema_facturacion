@@ -996,6 +996,7 @@ function varios_select1()
 }
 
 /*SELECT departamento municipio.*/
+/*
 function varios_select2()
 {
     $path_root=trim($_SERVER['DOCUMENT_ROOT']);

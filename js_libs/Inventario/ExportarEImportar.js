@@ -86,6 +86,7 @@ $('body').on('click','#listaArchivosOK a',function (e)
 		$("label[for='VerificarActualizar']").text("Actualizando...");
 			url_archivo_data = true;
 			console.log(url_archivo_data);
+			console.log(nombre_archivo);
 			// Comenzar el proceso del AJAX PARA EL NUEVO ARCHIVO.
 			// alert(url_archivo);
 				$.ajax({
@@ -94,11 +95,11 @@ $('body').on('click','#listaArchivosOK a',function (e)
 					dataType: "json",		
 					url: url_archivo,		
 					data: "nombre_archivo_=" + nombre_archivo + "&id=" + Math.random(),		
-					success: function(data){		
+					success: function(response){		
 					// validar		
-						if (data[0].registro == "Si_registro") {		
+						if (response.respuesta == true) {		
 							toastr.success("Hoja de Calculo Actualizada.");
-							$('#myModal').modal('hide');
+								$('#myModal').modal('hide');
 						}		
 					},		
 					error:function(){		

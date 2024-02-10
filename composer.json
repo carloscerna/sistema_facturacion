@@ -1,0 +1,17 @@
+{
+    "name": "home/sistema_facturacion",
+    "autoload": {
+        "psr-4": {
+            "Home\\SistemaFacturacion\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "carloscerna",
+            "email": "carlos_wilfredo_cerna@hotmail.com"
+        }
+    ],
+    "require": {
+        "phpoffice/phpspreadsheet": "^1.25"
+    }
+}

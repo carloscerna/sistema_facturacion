@@ -3,7 +3,7 @@ $directorio = opendir('../files/');
 // Inicializando el array
 $datos=array(); $fila_array = 0;
 // Iniciar Bucle que recorre el directorio
-    while ($elemento = utf8_decode(readdir($directorio)))
+    while ($elemento = mb_convert_encoding(readdir($directorio),"ISO-8859-1","UTF-8"))
     {
         if($elemento !='.' &&  $elemento != '..'){
             if(is_dir('../files/'.$elemento))
