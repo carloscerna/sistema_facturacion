@@ -129,7 +129,7 @@ ini_set("memory_limit","1024M");
                 //Es un número par
                 $RangoColumnas = "A".$fila_excel.":BI".$fila_excel;
                 $objPHPExcel->getActiveSheet()->getStyle($RangoColumnas)->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB('FFAFEEEE');
-                $objPHPExcel->getActiveSheet()->getStyle($RangoColumnas)->getFont()->getColor()->setRGB('FFFFFFFF');
+                $objPHPExcel->getActiveSheet()->getStyle($RangoColumnas)->getFont()->getColor()->setRGB('FF000000');
             } else {
                 //Es un número impar
                 $RangoColumnas = "A".$fila_excel.":BI".$fila_excel;

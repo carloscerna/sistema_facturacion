@@ -19,16 +19,16 @@ $(document).ready( function () {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //// INPUT MASK U OTROS.
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////        					
-								$(document).ready( function () {
-						       // Jquery-mask - entrado de datos.
-										$("#txtPrecioCosto").inputmask("decimal",{
-											radixPoint:".",
-											groupSeparator:",",
-											digits:6,
-											prefix:"$",
-											autoGroup: true
-										});
-								});
+		$(document).ready( function () {
+		// Jquery-mask - entrado de datos.
+				$("#txtPrecioCosto").inputmask("decimal",{
+					radixPoint:".",
+					groupSeparator:",",
+					digits:6,
+					prefix:"$",
+					autoGroup: true
+				});
+		});
 ///////////////////////////////////////////////////////////////////////////////
 //	FUNCION LISTAR BUSQUEDA DE LOS REGISTROS
 ///////////////////////////////////////////////////////////////////////////////
@@ -38,6 +38,7 @@ var listar = function(){
 		var table = $("#listadoCompras").dataTable({
 				"lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
 				"destroy": true,
+				"order": [[0, 'desc']],
 				"ajax":{
 					method:"POST",
 					url:"php_libs/soporte/FacturasCompras.php",

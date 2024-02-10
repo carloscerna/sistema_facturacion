@@ -34,6 +34,7 @@ var listar = function(){
 				"lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
 				"destroy": true,
 				"reponsive": true,
+				"order": [[0, 'ASC']],
 				"ajax":{
 					method:"POST",
 					url:"php_libs/soporte/FacturasVentas.php",
@@ -124,6 +125,7 @@ var idioma_espanol = {
 ///////////////////////////////////////////////////////////////////////////////	  
 $('#listadoVentas').on( 'click', 'a.imprimir', function () {
 	id_ =$(this).parents('tr').find('td').eq(0).html();
+	fecha_ =$(this).parents('tr').find('td').eq(1).html();					// fecha.
     numero_factura =$(this).parents('tr').find('td').eq(2).html();
 	codigo_tipo_factura =$(this).parents('tr').find('td').eq(3).html();
 	
@@ -147,27 +149,27 @@ $('#listadoVentas').on( 'click', 'a.imprimir', function () {
                     } 
     // CATPURAR EL CODIGO TIPO FACTURA.
      $.ajax({
-               cache: false,
-                type: "POST",
-	dataType: "json",
-	url:"php_libs/soporte/FacturasVentas.php",
-	data:"&accion=" + accion + "&id_=" + id_ + "&id=" + Math.random(),
-	success: function(data){
-                               // Si el valor es 01 PARA CARGAR LA FACTURA CONSUMIDOR FINAL.
-                                if (data[0].codigo_tipo_factura == "01") {
-                                   // construir la variable con el url.
-                                      varenviar = "/sistema_facturacion/php_libs/reportes/factura_consumidor_final.php?numero_factura="+numero_factura+"&fecha_nueva="+fecha+"&cambiar_fecha="+valor+"&no_fecha="+valor_no_fecha;
-                                   // Ejecutar la función
-                                      AbrirVentana(varenviar);
-                                }
-                               // Si el valor 02 PARA CARGAR LA FACTURA CREDITO FISCAL.
-                                if (data[0].codigo_tipo_factura == "02") {
-                                   // construir la variable con el url.
-                                      varenviar = "/sistema_facturacion/php_libs/reportes/factura_credito_fiscal.php?numero_factura="+numero_factura+"&fecha_nueva="+fecha+"&cambiar_fecha="+valor+"&no_fecha="+valor_no_fecha;
-                                   // Ejecutar la función
-                                      AbrirVentana(varenviar);
-                                }
-                      }
+		cache: false,
+		type: "POST",
+		dataType: "json",
+		url:"php_libs/soporte/FacturasVentas.php",
+		data:"&accion=" + accion + "&id_=" + id_ + "&id=" + Math.random() + "&fecha_=" + fecha_,
+		success: function(data){
+				// Si el valor es 01 PARA CARGAR LA FACTURA CONSUMIDOR FINAL.
+				if (data[0].codigo_tipo_factura == "01") {
+					// construir la variable con el url.
+						varenviar = "/sistema_facturacion/php_libs/reportes/factura_consumidor_final.php?numero_factura="+numero_factura+"&fecha_nueva="+fecha+"&cambiar_fecha="+valor+"&no_fecha="+valor_no_fecha;
+					// Ejecutar la función
+						AbrirVentana(varenviar);
+				}
+				// Si el valor 02 PARA CARGAR LA FACTURA CREDITO FISCAL.
+				if (data[0].codigo_tipo_factura == "02") {
+					// construir la variable con el url.
+						varenviar = "/sistema_facturacion/php_libs/reportes/factura_credito_fiscal.php?numero_factura="+numero_factura+"&fecha_nueva="+fecha+"&cambiar_fecha="+valor+"&no_fecha="+valor_no_fecha;
+					// Ejecutar la función
+						AbrirVentana(varenviar);
+				}
+		}
 	});
 });
 ///////////////////////////////////////////////////////////////////////////////
@@ -176,6 +178,7 @@ $('#listadoVentas').on( 'click', 'a.imprimir', function () {
 ///////////////////////////////////////////////////////////////////////////////	  
 $('#listadoVentas').on( 'click', 'a.hoja', function () {
 	id_ =$(this).parents('tr').find('td').eq(0).html();
+	fecha_ =$(this).parents('tr').find('td').eq(1).html();					// fecha.
     numero_factura =$(this).parents('tr').find('td').eq(2).html();
 	codigo_tipo_factura =$(this).parents('tr').find('td').eq(3).html();
 	
@@ -195,11 +198,13 @@ $('#listadoVentas').on( 'click', 'a.hoja', function () {
               type: "POST",                          
               dataType: "json",                          
               url:"php_libs/soporte/CrearFacturasVentas.php",                          
-              data: "id_=" + id_ + "&numero_factura=" + numero_factura + "&codigo_tipo_factura=" + codigo_tipo_factura + "&id=" + Math.random() +"&fecha_nueva="+fecha+"&cambiar_fecha="+valor,                          
+              data: "id_=" + id_ + "&numero_factura=" + numero_factura + 
+			  		"&codigo_tipo_factura=" + codigo_tipo_factura + "&id=" + Math.random() +"&fecha_nueva="+fecha+"&cambiar_fecha="+valor
+					+"&fecha_=" + fecha_,                          
               success: function(response){                          
                   // Validar mensaje de error                          
                   if(response.respuesta === false){                          
-                          alertify.log("Archivo no creado.");                          
+					alertify.log("Archivo No Creado.");                          
                   }                          
                   else{                          
                         alertify.success("Archivo Creado.");}                          

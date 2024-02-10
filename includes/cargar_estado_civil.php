@@ -2,7 +2,7 @@
 // ruta de los archivos con su carpeta
     $path_root=trim($_SERVER['DOCUMENT_ROOT']);
 // Incluimos el archivo de funciones y conexión a la base de datos
-include($path_root."/sgp_web/includes/mainFunctions_conexion.php");
+include($path_root."/sistema_facturacion/includes/mainFunctions_conexion.php");
 // armando el Query.
 $query = "SELECT codigo, nombre from catalogo_estado_civil ORDER BY codigo";
 // Ejecutamos el Query.

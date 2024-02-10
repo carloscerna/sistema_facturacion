@@ -11,7 +11,7 @@ sleep(0);
 
 // Inicializamos variables de mensajes y JSON
 $respuestaOK = false;
-$mensajeError = "No se puede ejecutar la aplicación";
+$mensajeError = "No se puede ejecutar la aplicaciï¿½n";
 $contenidoOK = "";
 $fila_array = 0;
 $datos = array();
@@ -19,18 +19,18 @@ $arreglo = array();
 // ruta de los archivos con su carpeta
     $path_root=trim($_SERVER['DOCUMENT_ROOT']);
     
-// Incluimos el archivo de funciones y conexión a la base de datos
+// Incluimos el archivo de funciones y conexiï¿½n a la base de datos
 include($path_root."/sistema_facturacion/includes/funciones.php");
 include($path_root."/sistema_facturacion/includes/mainFunctions_conexion.php");
 
-// Validar conexión con la base de datos
+// Validar conexiï¿½n con la base de datos
 if($errorDbConexion == false){
 	// Validamos qe existan las variables post
 	if(isset($_POST) && !empty($_POST)){
 		if(!empty($_POST['accion_buscar'])){
 			$_POST['accion'] = $_POST['accion_buscar'];
 		}
-		// Verificamos las variables de acción
+		// Verificamos las variables de acciï¿½n
 		switch ($_POST['accion']) {	
 		case 'BuscarTodos':
 				// Armamos el query.
@@ -47,7 +47,7 @@ if($errorDbConexion == false){
                             INNER JOIN clientes cli ON cli.codigo = fac_v.codigo_cliente
                             INNER JOIN catalogo_tipo_factura cat_fac ON cat_fac.codigo = fac_v.codigo_tipo_factura
                             INNER JOIN catalogo_descuento cat_des ON cat_des.codigo = fac_v.codigo_descuento
-                            ORDER BY fac_v.fecha ASC";
+                            ORDER BY fac_v.id_ventas DESC";
 				// Armamos el query.
 				/*$query = "SELECT fac_v.id_ventas, to_char(fac_v.fecha,'DD/MM/YYYY') as fecha, fac_v.numero_factura, fac_v.codigo_tipo_factura,
                             to_char(fac_v.total_venta-(fac_v.total_venta*(cat_des.descripcion/100)),'$9,999,999.00') as total_venta, fac_v.estado_factura,
@@ -162,7 +162,7 @@ if($errorDbConexion == false){
 			break;
 		
 			case 'EliminarRegistro':
-                // extraer información del POST FacturasVentas.js
+                // extraer informaciï¿½n del POST FacturasVentas.js
 				$id_ = trim($_POST['id_']);
                 $separar_numero_factura = explode("-",$_POST['numero_factura']);
                 $separar_codigo_tipo_factura = explode("-",$_POST['codigo_tipo_factura']);
@@ -239,15 +239,15 @@ if($errorDbConexion == false){
 			break;
 		
 			default:
-				$mensajeError = 'Esta acción no se encuentra disponible';
+				$mensajeError = 'Esta acciï¿½n no se encuentra disponible';
 			break;
 		}
 	}
 	else{
-		$mensajeError = 'No se puede ejecutar la aplicación';}
+		$mensajeError = 'No se puede ejecutar la aplicaciï¿½n';}
 }
 else{
-	$mensajeError = 'No se puede establecer conexión con la base de datos';}
+	$mensajeError = 'No se puede establecer conexiï¿½n con la base de datos';}
 // Salida de la Array con JSON.
 	if($_POST["accion"] === "BuscarTodos" or $_POST["accion"] === "BuscarTodosCodigo"){
 		echo json_encode($arreglo);	

@@ -8,16 +8,18 @@
     include($path_root."/sistema_facturacion/includes/mainFunctions_conexion.php");
    	include($path_root."/sistema_facturacion/includes/NumberToLetterConverter.class.php");
 // variables y consulta a la tabla.
-  $id_ = $_REQUEST["id_"];
-  $separar_numero_factura = explode("-",$_POST['numero_factura']);
-  $separar_codigo_tipo_factura = explode("-",$_POST['codigo_tipo_factura']);
-	$numero_factura = $separar_numero_factura[1];
-  $numero_factura_real = $separar_numero_factura[0];
-	$codigo_tipo_factura = $separar_codigo_tipo_factura[0]; 
-  
-  $db_link = $dblink;
-  if(isset($_REQUEST['cambiar_fecha'])){$cambiar_fecha = $_REQUEST['cambiar_fecha'];}else{$cambiar_fecha = 0;}
-	if(isset($_REQUEST['fecha_nueva'])){$fecha_nueva = cambiaf_a_normal($_REQUEST['fecha_nueva']);}else{$fecha_nueva = "";}
+    $id_ = $_REQUEST["id_"];
+    $fecha_ = explode("/",$_REQUEST["fecha_"]);
+    $fecha_año = $fecha_[2];
+    $separar_numero_factura = explode("-",$_POST['numero_factura']);
+    $separar_codigo_tipo_factura = explode("-",$_POST['codigo_tipo_factura']);
+    $numero_factura = $separar_numero_factura[1];
+    $numero_factura_real = $separar_numero_factura[0];
+    $codigo_tipo_factura = $separar_codigo_tipo_factura[0]; 
+//
+    $db_link = $dblink;
+    if(isset($_REQUEST['cambiar_fecha'])){$cambiar_fecha = $_REQUEST['cambiar_fecha'];}else{$cambiar_fecha = 0;}
+    if(isset($_REQUEST['fecha_nueva'])){$fecha_nueva = cambiaf_a_normal($_REQUEST['fecha_nueva']);}else{$fecha_nueva = "";}
 
 // Inicializamos variables de mensajes y JSON
 $respuestaOK = true;
@@ -97,14 +99,13 @@ $contenidoOK = "";
       //  LLENAR LAS CELDAS QUE CONTIENEN VALORES FIJOS EN LA COTIZACIÒN.
       if($num === 0)
       {
-        		//Crear una línea. Fecha.
+        //Crear una línea. Fecha.
             $fecha_venta = cambiaf_a_normal($row["fecha"]);
-      		if($cambiar_fecha == 1){
-                  $fecha = $fecha_nueva;
-                  }
-          			else{
-                  $fecha = $fecha_venta;
-          			}
+            if($cambiar_fecha == 1){
+                $fecha = $fecha_nueva;
+            }else{
+                $fecha = $fecha_venta;
+            }
             $dato_fecha = explode("/", $fecha);  
             $dia = $dato_fecha[0];		// El Día.
             $mes = $meses[$dato_fecha[1]-1];
@@ -139,17 +140,17 @@ $contenidoOK = "";
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////        
    }    //  FIN DEL WHILE.
 // Verificar si Existe el directorio archivos.
-		$codigo_tipo_factura = $codigo_tipo_factura;
-		$nombre_ann_lectivo = "2019";
-    $cantidad_en_letras = utf8_encode(numtoletras($total_venta));
+    //$codigo_tipo_factura = $codigo_tipo_factura;
+    $nombre_ann_lectivo = $fecha_año;
+    $cantidad_en_letras = mb_convert_encoding(numtoletras($total_venta),"ISO-8859-1","UTF-8");
     
 // Escribar cantidad en letras
     $objPHPExcel->getActiveSheet()->SetCellValue("D134", $cantidad_en_letras);
-		$codigo_destino = 1;
-		CrearDirectorios($path_root,$nombre_ann_lectivo,$codigo_tipo_factura,$codigo_destino,"");
-	// Nombre del archivo.
-		$nombre_archivo = ($numero_factura .".xlsx");
-
+    $codigo_destino = 1;
+    CrearDirectorios($path_root,$nombre_ann_lectivo,$codigo_tipo_factura,$codigo_destino,"");
+// Nombre del archivo.
+    $nombre_archivo = ($numero_factura .".xlsx");
+//
 	try {
     // Grabar el archivo.
 		$objWriter = new Xlsx($objPHPExcel);
