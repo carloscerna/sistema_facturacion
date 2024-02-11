@@ -11,7 +11,7 @@ sleep(0);
 
 // Inicializamos variables de mensajes y JSON
 $respuestaOK = false;
-$mensajeError = "No se puede ejecutar la aplicación";
+$mensajeError = "No se puede ejecutar la aplicaciï¿½n";
 $contenidoOK = "";
 $fila_array = 0;
 $datos = array();
@@ -19,22 +19,23 @@ $arreglo = array();
 // ruta de los archivos con su carpeta
     $path_root=trim($_SERVER['DOCUMENT_ROOT']);
     
-// Incluimos el archivo de funciones y conexión a la base de datos
+// Incluimos el archivo de funciones y conexiï¿½n a la base de datos
 include($path_root."/sistema_facturacion/includes/funciones.php");
 include($path_root."/sistema_facturacion/includes/mainFunctions_conexion.php");
 
-// Validar conexión con la base de datos
+// Validar conexiï¿½n con la base de datos
 if($errorDbConexion == false){
 	// Validamos qe existan las variables post
 	if(isset($_POST) && !empty($_POST)){
 		if(!empty($_POST['accion_buscar'])){
 			$_POST['accion'] = $_POST['accion_buscar'];
 		}
-		// Verificamos las variables de acción
+		// Verificamos las variables de acciï¿½n
 		switch ($_POST['accion']) {	
 		case 'BuscarTodos':
 				// Armamos el query.
-				$query = "SELECT p.id_personal, p.apellidos, p.nombres, cat_estatus.descripcion as nombre_estatus
+				$query = "SELECT p.id_personal, p.apellidos, p.nombres, 
+						TRIM(cat_estatus.descripcion) as nombre_estatus
                         FROM personal p
                         INNER JOIN catalogo_estatus cat_estatus ON cat_estatus.codigo = p.codigo_estatus
                         ORDER BY p.apellidos, p.nombres ASC";
@@ -59,75 +60,71 @@ if($errorDbConexion == false){
 			break;			
 	
 			case 'GuardarRegistro':
-                $codigo_tipo_factura = trim($_POST['lstTipoFactura']);
-                $codigo_estatus = trim($_POST['lstEstatus']);
-                $tiraje = trim($_POST['txtNumeroFacturaTiraje']);
-                $numero_inicio = trim($_POST['txtNumeroFacturaInicio']);
-                $numero_fin = trim($_POST['txtNumeroFacturaFin']);
-				$fecha_autorizacion = trim($_POST['txtFechaAutorizacion']);
-                $fecha_impresion = trim($_POST['txtFechaImpresion']);
-                $codigo_estatus = trim($_POST['lstEstatus']);
-                
-                // Armar query para evaluar si el tipo de factura y el estatus esta activo.
-                $query_estatus = "SELECT * FROM facturas_tiraje WHERE codigo_tipo_factura = '$codigo_tipo_factura' and codigo_estatus = '$codigo_estatus' limit 1";
-                $consulta_estatus = $dblink -> query($query_estatus);
-                if($consulta_estatus -> rowCount() != 0){
-                    $respuestaOK = false;
-					$contenidoOK = $query_estatus;
-					$mensajeError =  'Estatus';
-                }else{
+                $nombres = trim($_POST['txtNombres']);
+                $apellidos = trim($_POST['txtApellidos']);
+                $fecha_nacimiento = trim($_POST['txtFechaNacimiento']);
+                $codigo_genero = trim($_POST['lstGenero']);
+                $codigo_estado_civil = trim($_POST['lstEstadoCivil']);
+				$codigo_afp = trim($_POST['lstAfp']);
+                $codigo_departamento = trim($_POST['lstDepartamento']);
+                $codigo_municipio = trim($_POST['lstMunicipio']);
+				$direccion = trim($_POST['txtDireccion']);
+				$codigo_estatus = trim($_POST['lstEstatus']);
+                /// Armar query. PARA GUARDAR EL NUEVO REGISTRO SI PASA LA PRIMERA EVALUACIï¿½N.
                     ///
-                    /// Armar query. PARA GUARDAR EL NUEVO REGISTRO SI PASA LA PRIMERA EVALUACIÓN.
-                    ///
-                    $query = "INSERT INTO personal (codigo_tipo_factura, codigo_estatus, tiraje, numero_inicio, numero_fin, fecha_autorizacion, fecha_impresion)
-                            VALUES ('$codigo_tipo_factura','$codigo_estatus','$tiraje','$numero_inicio','$numero_fin','$fecha_autorizacion','$fecha_impresion')";
-
+                    $query = "INSERT INTO personal (nombres, apellidos,fecha_nacimiento, codigo_genero, codigo_estado_civil, codigo_afp, codigo_departamento, codigo_municipio,
+								direccion, codigo_estatus)
+                            VALUES ('$nombres','$apellidos','$fecha_nacimiento','$codigo_genero','$codigo_estado_civil','$codigo_afp',
+								'$codigo_departamento','$codigo_municipio','$direccion','$codigo_estatus')";
                     // Ejecutamos el Query.
                     $consulta = $dblink -> query($query);
                     // Verificar la consulta
                     if($consulta == true){
                         $respuestaOK = true;
                         $contenidoOK = $query;
-                        $mensajeError =  'Si Registro';
+                        $mensajeError =  'Registro guardado.';
                     }else{
                         $respuestaOK = false;
                         $contenidoOK = $query;
-                        $mensajeError =  'No Registro';}
-                }		
+                        $mensajeError =  'No se puede guardar el registro.';}
 			break;
 		
 			case 'EditarRegistro':
 				$id_ = trim($_POST['id_']);
 				// Armar Query.
-				$query = "SELECT id_factura_tiraje, tiraje, numero_inicio, numero_fin, fecha_autorizacion, fecha_impresion, codigo_estatus, codigo_tipo_factura
-                            FROM facturas_tiraje WHERE id_factura_tiraje = '$id_'
-					";
+				$query = "SELECT * FROM personal WHERE id_personal = '$id_'";
 				// Ejecutamos el Query.
 				$consulta = $dblink -> query($query);
 				// Inicializando el array
-				   //$datos=array(); $fila_array = 0;
+				   $datos=array(); $fila_array = 0;
 				// Recorriendo la Tabla con PDO::
 					$num = 1;
 					    if($consulta -> rowCount() != 0){		
 						while($listado = $consulta -> fetch(PDO::FETCH_BOTH))
 						  {
 						      // recopilar los valores de los campos.
-						      $id_ = trim($listado['id_factura_tiraje']);
-						      $tiraje = trim($listado['tiraje']);
-                              $numero_inicio = trim($listado['numero_inicio']);
-							  $numero_fin = trim($listado['numero_fin']);
-                              $fecha_autorizacion = cambiaf_a_normal(trim($listado['fecha_autorizacion']));
-                              $fecha_impresion = cambiaf_a_normal(trim($listado['fecha_impresion']));
-                              $codigo_tipo_factura = trim($listado['codigo_tipo_factura']);
+						      $id_ = trim($listado['id_personal']);
+						      $nombres = trim($listado['nombres']);
+                              $apellidos = trim($listado['apellidos']);
+                              $fecha_nacimiento = cambiaf_a_normal(trim($listado['fecha_nacimiento']));
+                              $codigo_genero = trim($listado['codigo_genero']);
+							  $codigo_estado_civil = trim($listado['codigo_estado_civil']);
+							  $codigo_afp = trim($listado['codigo_afp']);
+							  $codigo_departamento = trim($listado['codigo_departamento']);
+							  $codigo_municipio = trim($listado['codigo_municipio']);
+							  $direccion = trim($listado['direccion']);
 							  $codigo_estatus = trim($listado['codigo_estatus']);
 							  //
 							  $datos[$fila_array]["id_"] = $id_;
-                              $datos[$fila_array]["tiraje"] = $tiraje;
-                              $datos[$fila_array]["numero_inicio"] = $numero_inicio;
-                              $datos[$fila_array]["numero_fin"] = $numero_fin;
-                              $datos[$fila_array]["fecha_autorizacion"] = $fecha_autorizacion;
-                              $datos[$fila_array]["fecha_impresion"] = $fecha_impresion;
-                              $datos[$fila_array]["codigo_tipo_factura"] = $codigo_tipo_factura;
+                              $datos[$fila_array]["nombres"] = $nombres;
+                              $datos[$fila_array]["apellidos"] = $apellidos;
+                              $datos[$fila_array]["fecha_nacimiento"] = $fecha_nacimiento;
+                              $datos[$fila_array]["codigo_genero"] = $codigo_genero;
+                              $datos[$fila_array]["codigo_estado_civil"] = $codigo_estado_civil;
+                              $datos[$fila_array]["codigo_afp"] = $codigo_afp;
+							  $datos[$fila_array]["codigo_departamento"] = $codigo_departamento;
+							  $datos[$fila_array]["codigo_municipio"] = $codigo_municipio;
+							  $datos[$fila_array]["direccion"] = $direccion;
                               $datos[$fila_array]["codigo_estatus"] = $codigo_estatus;
 						   // Incrementar el valor del array.
 						     $fila_array++; $num++;
@@ -140,12 +137,23 @@ if($errorDbConexion == false){
 		
 			case 'ActualizarRegistro':
 				$id_ = trim($_POST['id_']);
-				$fecha_autorizacion = trim($_POST['txtFechaAutorizacion']);
-                $fecha_impresion = trim($_POST['txtFechaImpresion']);
-                $codigo_estatus = trim($_POST['lstEstatus']);              
-				
+				$nombres = trim($_POST['txtNombres']);
+                $apellidos = trim($_POST['txtApellidos']);
+                $fecha_nacimiento = trim($_POST['txtFechaNacimiento']);
+                $codigo_genero = trim($_POST['lstGenero']);
+                $codigo_estado_civil = trim($_POST['lstEstadoCivil']);
+				$codigo_afp = trim($_POST['lstAfp']);
+                $codigo_departamento = trim($_POST['lstDepartamento']);
+                $codigo_municipio = trim($_POST['lstMunicipio']);
+				$direccion = trim($_POST['txtDireccion']);
+				$codigo_estatus = trim($_POST['lstEstatus']);
 				// Armar query para actualizar.
-				$query = "UPDATE facturas_tiraje SET fecha_autorizacion = '$fecha_autorizacion', fecha_impresion = '$fecha_impresion', codigo_estatus = '$codigo_estatus' WHERE id_factura_tiraje = '$id_'";
+				$query = "UPDATE personal SET nombres = '$nombres', apellidos = '$apellidos',
+							fecha_nacimiento = '$fecha_nacimiento', codigo_genero = '$codigo_genero', 
+							codigo_estado_civil = '$codigo_estado_civil', codigo_afp = '$codigo_afp', 
+							codigo_departamento = '$codigo_departamento', codigo_municipio = '$codigo_municipio', 
+							direccion = '$direccion', codigo_estatus = '$codigo_estatus' 
+								WHERE id_personal = '$id_'";
 				// Ejecutamos el Query.
 				$consulta = $dblink -> query($query);
 				// Verificar la consulta
@@ -156,51 +164,36 @@ if($errorDbConexion == false){
 				}else{
 					$respuestaOK = false;
 					$contenidoOK = $query;
-					$mensajeError =  'No Registro';					
+					$mensajeError =  'Registro No Registro';					
 				}
 			break;
 		
 			case 'EliminarRegistro':
 				$id_ = trim($_POST['id_']);
-                $numero_factura_real = trim($_POST['numero_factura_real']);
 
-                $query_ventas = "SELECT * FROM facturas_ventas WHERE numero_factura_real = '$numero_factura_real' LIMIT 1";
+                $query_ = "DELETE FROM personal WHERE id_personal = '$id_'";
                 // Ejecutamos el Query.
-                    $consulta_ventas = $dblink -> query($query_ventas);				
-                        if($consulta_ventas -> rowCount() > 0){
+                    $consulta_ = $dblink -> query($query_);				
+                        if($consulta_ -> rowCount() > 0){
                             $respuestaOK = false;
-                            $contenidoOK = $query_ventas;
-                            $mensajeError = "No Eliminar";
-                            }
-                        else{
-                            // Armar query.
-                            $query = "DELETE FROM facturas_tiraje WHERE id_factura_tiraje = $id_";
-                            // Ejecutamos el Query.
-                            $consulta = $dblink -> query($query);				
-                            // Verificar la consulta
-                            if($consulta == true){
-                                $respuestaOK = true;
-                                $contenidoOK = $query;
-                                $mensajeError =  'Si Registro';
-                            }else{
-                                $respuestaOK = false;
-                                $contenidoOK = $query;
-                                $mensajeError =  'No Registro';					
-                            }
+                            $contenidoOK = $query_;
+                            $mensajeError = "Registro Eliminado";
+                        }else{
+							$respuestaOK = true;
+							$contenidoOK = $query;
+							$mensajeError =  'Registro No Eliminado.';
                         }
 			break;
-
-		
 			default:
-				$mensajeError = 'Esta acción no se encuentra disponible';
+				$mensajeError = 'Esta acciï¿½n no se encuentra disponible';
 			break;
 		}
 	}
 	else{
-		$mensajeError = 'No se puede ejecutar la aplicación';}
+		$mensajeError = 'No se puede ejecutar la aplicaciï¿½n';}
 }
 else{
-	$mensajeError = 'No se puede establecer conexión con la base de datos';}
+	$mensajeError = 'No se puede establecer conexiï¿½n con la base de datos';}
 // Salida de la Array con JSON.
 	if($_POST["accion"] === "BuscarTodos" or $_POST["accion"] === "BuscarTodosCodigo"){
 		echo json_encode($arreglo);	

@@ -35,24 +35,24 @@
 			"showMethod": "fadeIn",
 			"hideMethod": "fadeOut"
 	};
-	</script>
+</script>
 	
-		<script>
-			// VALIDAR LOS ENTER EN EL FORMULARIO.
-			$(document).ready(function() {
-				$('form').keypress(function(e){   
-				  if(e == 13){
-					return false;
-				  }
-				});
-		  
-				$('input').keypress(function(e){
-				  if(e.which == 13){
-					return false;
-				  }
-				});
-			});
-		</script>	
+<script>
+	// VALIDAR LOS ENTER EN EL FORMULARIO.
+	$(document).ready(function() {
+		$('form').keypress(function(e){   
+			if(e == 13){
+			return false;
+			}
+		});
+	
+		$('input').keypress(function(e){
+			if(e.which == 13){
+			return false;
+			}
+		});
+	});
+</script>	
 {% endblock %}
 
 {% block contenidos %}
@@ -86,20 +86,20 @@
 							<!-- CREACION DE LA TABLA PARA EL INGRESO DE DATOS DESDE AJAX Y PHP. -->
 								<div class="row">
 									<div class="col-12 col-md-12">
-											<table id="listadoDatosEmpleado" class="table table-striped table-condensed table-hover table-responsive-sm text-dark">
-													<thead>
-														<tr class="bg-secondary text-white" style="font-size: 11px;">
-																<th class="centerTXT">Id</th>
-																<th class="centerTXT">Apellidos</th>
-																<th class="centerTXT">Nombres</th>
-																<th class="centerTXT">Estatus </th>
-																<th></th>
-																<th></th>
-														</tr>
-													</thead>
-													<tbody id="listaUsuariosOK">
-														<!-- Datos que provienen de la consulta con Ajax y PHP. -->
-													</tbody>
+									<table id="listadoDatosEmpleado" class="table table-striped table-condensed table-hover table-responsive-sm text-dark">
+											<thead>
+												<tr class="bg-secondary text-white">
+														<th>Id</th>
+														<th>Nombres</th>
+														<th>Apellidos</th>
+														<th>Estatus </th>
+														<th></th>
+														<th></th>
+												</tr>
+											</thead>
+											<tbody id="listaUsuariosOK">
+												<!-- Datos que provienen de la consulta con Ajax y PHP. -->
+											</tbody>
 											</table>
 										</div>
 								</div>
@@ -115,41 +115,40 @@
 </div> <!-- container -->
 <!--		VENTANA MODAL - ELIMINAR -->
 <div class="row mt-3 text-dark">
-			<div class="col">
-			<div class="modal fade" data-backdrop="static" data-keyboard="false" id="VentanaEliminar" tabindex="-1" role="dialog" aria-labelledby="VentanaEliminar" aria-hidden="true">
-					<div class="modal-dialog modal-md">
-						<div class="modal-content">
-							<div class="modal-header modal-header-warning">
-								<h6 class="modal-title" id=""><span class="fa fa-trash"></span>¿Desea Eliminar El Registro?</h6>
-								<button class="close" data-dismiss="modal" aria-label="Cerrar">
-									<span aria-hidden="true">&times;</span>
-								</button>
-							</div>
+	<div class="col">
+		<div class="modal fade" data-backdrop="static" data-keyboard="false" id="VentanaEliminar" tabindex="-1" role="dialog" aria-labelledby="VentanaEliminar" aria-hidden="true">
+			<div class="modal-dialog modal-md">
+				<div class="modal-content">
+					<div class="modal-header modal-header-warning">
+						<h6 class="modal-title" id=""><span class="fa fa-trash"></span>¿Desea Eliminar El Registro?</h6>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Cerrar" title="Cerrar">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
 
-							<div class="modal-body">
-								<div class="container-fluid">
-									<div class="row">
-										<div class="col-12 col-md-12">
-											<p>
-												<h5>Id_: <span class="badge badge-info" for="Id"></span></h5>
-												<h6>Tipo de Factura: <span class="badge badge-info" for="TipoFactura"></span></h3>
-												<h6>Tiraje: <span class="badge badge-info"  for="Tiraje"></span></h3>
-											</p>
-										</div>
-									</div>
+					<div class="modal-body">
+						<div class="container-fluid">
+							<div class="row">
+								<div class="col-12 col-md-12">
+									<p>
+										<h5>Id_: <span class="badge badge-info" for="Id"></span></h5>
+										<h6>Nombres: <span class="badge badge-info" for="TipoFactura"></span></h6>
+										<h6>Apellidos: <span class="badge badge-info"  for="Tiraje"></span></h6>
+									</p>
 								</div>
 							</div>
-
-							<div class="modal-footer">
-								<button class="btn btn-success" id="BotonEliminarRegistro" value="SiEliminarRegistro">Aceptar</button>
-								<button class="btn btn-default" data-dismiss="modal">Cerrar</button>
-							</div>
 						</div>
+					</div>
+
+					<div class="modal-footer">
+						<button class="btn btn-success" id="BotonEliminarRegistro" value="SiEliminarRegistro">Aceptar</button>
+						<button class="btn btn-default" data-dismiss="modal">Cerrar</button>
 					</div>
 				</div>
 			</div>
 		</div>
-<!--
+	</div>
+</div>
 <!-- plantilla que contiene el VentanaNumeroFacturaTirjae. -->
 		{% include 'VentanaDatosEmpleado.html' %}
 <!-- plantilla que contiene el menú principal. -->

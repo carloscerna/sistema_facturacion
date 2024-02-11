@@ -42,9 +42,25 @@ var listar = function(){
 				"deferRender": true,
 				"columns":[
 					{"data":"id_personal"},
-					{"data":"apellidos"},
 					{"data":"nombres"},
-					{"data":"nombre_estatus"},
+					{"data":"apellidos"},
+					{
+						data: 'nombre_estatus',
+						render: function (data, type) {
+							if (type === 'display') {
+								let color = 'badge badge-primary';
+								if (data === 'Activo') {
+								}
+								if (data === 'Inactivo') {
+									color = 'badge badge-danger';
+								}
+							//return `<span style="color:${color}">${data}</span>`;
+							return `<span class="${color}">${data}</span>`;
+						}		 
+						return data;
+					}
+				},
+					
 					{
 						data: null,
 						defaultContent: '<a href="#" class="editar btn btn-info" data-toggle="modal" data-toggle="tooltip" data-placement="right" title="Editar"> <span class="fa fa-edit"></span>',
@@ -64,26 +80,28 @@ var listar = function(){
 //	FUNCION que al dar clic buscar el registro para posterior mente abri una
 // ventana modal. EDITAR REGISTRO
 ///////////////////////////////////////////////////////////////////////////////	  
-$('#listadoNumerosFactura').on( 'click', 'a.editar', function () {
+$('#listadoDatosEmpleado').on( 'click', 'a.editar', function () {
 				id_ =$(this).parents('tr').find('td').eq(0).html();
 				accion = "EditarRegistro";	// variable global
 				$.post("php_libs/soporte/DatosEmpleado.php", {accion: accion, id_: id_},
 				       function(data){
 							// Cargar valores a los objetos
 								$('#txtId').val(data[0].id_);
-								$('#txtNumeroFacturaTiraje').val(data[0].tiraje);
-								$('#txtNumeroFacturaInicio').val(data[0].numero_inicio);
-								$('#txtNumeroFacturaFin').val(data[0].numero_fin);
-								$('#txtFechaAutorizacion').val(data[0].fecha_autorizacion);
-								$('#txtFechaImpresion').val(data[0].fecha_impresion);
-								$('#lstTipoFactura option[value='+data[0].codigo_tipo_factura+']').prop('selected',true);
-								 $('#lstEstatus option[value='+data[0].codigo_estatus+']').prop('selected',true);
-								
+								$('#txtNombres').val(data[0].nombres);
+								$('#txtApellidos').val(data[0].apellidos);
+								$('#txtFechaNacimiento').val(data[0].fecha_nacimiento);
+								$('#lstGenero').val(data[0].codigo_genero);
+								$('#lstEstadoCivil').val(data[0].codigo_estado_civil);
+								$('#lstAfp').val(data[0].codigo_afp);
+								$('#lstDepartamento').val(data[0].codigo_departamento);
+								$('#lstMunicipio').val(data[0].codigo_municipio);
+								$('#txtDireccion').val(data[0].direccion);
+								$('#lstEstatus').val(data[0].codigo_estatus);
 								//////////////////////////////////////////////////////////////
 								// Cambiar el accion_cliente a Actualizar REgistro
 								//////////////////////////////////////////////////////////////
 								// Abrimos el Formulario Modal y Rellenar For.
-									$('#VentanaNumeroFacturaTiraje').modal("show");
+									$('#VentanaDatosEmpleado').modal("show");
 									toastr.success("Registro(s) listo para Editar.");
 									accion = "ActualizarRegistro";	// variable global
 				}, "json");	
@@ -93,7 +111,7 @@ $('#listadoNumerosFactura').on( 'click', 'a.editar', function () {
 //	FUNCION que al dar clic buscar el registro para posterior mente abri una
 // ventana modal. ELIMINAR REGISTRO
 ///////////////////////////////////////////////////////////////////////////////	  
-$('#listadoNumerosFactura').on( 'click', 'a.remove', function () {
+$('#listadoDatosEmpleado').on( 'click', 'a.remove', function () {
 			id_ =$(this).parents('tr').find('td').eq(0).html();
 			tipo_factura =$(this).parents('tr').find('td').eq(1).html();
 			tiraje =$(this).parents('tr').find('td').eq(2).html();
@@ -117,85 +135,42 @@ $("#BotonEliminarRegistro").on('click', function(){
 		            type: "POST",
 		            dataType: "json",
                         url:"php_libs/soporte/DatosEmpleado.php",
-		            data:"accion="+ accion + "&id_=" + id_ + "&numero_factura_real=" + tiraje + "&id=" + Math.random(),
+		            data:"accion="+ accion + "&id_=" + id_  + "&id=" + Math.random(),
 		            success: function(response){
 		            	// Validar mensaje de error
                         // Si el valor si existe compararlo con mensaje error.
-                           if (response.mensaje == "Si Registro") {
-                                toastr.warning("Registro(s) Eliminado(s).");
-								listar();
-                           }                                                
-                           if (response.mensaje == "No Eliminar") {
-                                toastr.info("No se puede Eliminar. El Tiraje Tiene Facturas en el Sistema.");
-                           }
-                           if (response.mensaje == "No Registro") {
-                                toastr.error("Registro(s) No Eliminado(s).");
-                           }
+                           if (response.respuesta == true) {
+                                toastr.warning(response.mensaje);
+                           }else{
+								toastr.info(response.mensaje);
+						   }                                                
+						   //
+						   listar();
 		            },
 		            error:function(){
 		                toastr.error("Error, ejecución de la consulta");
 		            }
 		        });		
 	// Cerrar el Formulario Modal y reinicar variables.
-	accion = ""; id_ = 0; tipo_factura = ""; tiraje = "";
+	accion = ""; id_ = 0;
 	$('#VentanaEliminar').modal("hide");	
 });
 ///////////////////////////////////////////////////////////////////////////////
 // BOTÓN GUARDAR. QUE ESTA DENTRO DEL FORM AGREGARUSER
 ///////////////////////////////////////////////////////////////////////////////	
-	jQuery.validator.addMethod("valores",function(value, element, param) {
-	var result = true;
-	var comparador = $(param).val();
-	var valor1 = $(param).val();
-	var valor2 = value;
-	
-	console.log(valor1);
-	console.log(valor2);
-	// VALIDAR			
-		if (parseInt(valor1) <= parseInt(valor2)) {
-		  result = true;
-		  console.log("Verdadero");
-		} else {
-		  console.log("Falso");
-		  result = false;
-		}
-	
-		if (parseInt(valor1) == parseInt(valor2)) {
-		  result = false;
-		  console.log("Falso");
-		}
-		
-		return result;
-		
-		}, "valores");
-
-		$('#formTiraje').validate({
+		$('#formVentanaDatosEmpleado').validate({
 			rules:{
-			        txtNumeroFacturaTiraje: {
-						required: true,
-						maxlength: 8,
-						minlength: 8
-					},
-					txtNumeroFacturaInicio:{
-					   required: true,
-					   maxlength: 5,
-					   minlength: 1,
-					   digits: false,
-					   min: 1
-					},
-					txtNumeroFacturaFin:{
-					   required: true,
-					   maxlength: 5,
-					   minlength: 1,
-					   digits: false,
-					   min: 2,
-					   valores: "#txtNumeroFacturaInicio"
-					}   
+				txtNombres: {
+					required: true,
+					maxlength: 40
+				},
+				txtApellidos:{
+				   required: true,
+				   maxlength: 40
+				},
 			},
 			messages: {
-				txtNumeroFacturaFin:{
-					valores: "El Número Factura Inicio no puede ser MAYOR o IGUAL que el Número Factura Fin"
-				}
+				
 			},
 				errorPlacement: function(error, element){
 						if(element.parent('.input-group').length){
@@ -206,7 +181,7 @@ $("#BotonEliminarRegistro").on('click', function(){
 				},
 		    submitHandler: function(){
              // Serializar los datos, toma todos los Id del formulario con su respectivo valor.
-		        var str = $('#formDatosEmpleado').serialize();
+		        var str = $('#formVentanaDatosEmpleado').serialize();
 					//alert(str);
 
 		        $.ajax({
@@ -216,31 +191,18 @@ $("#BotonEliminarRegistro").on('click', function(){
 		            url:"php_libs/soporte/DatosEmpleado.php",
 		            data:str + "&accion=" + accion + "&id_=" + id_ +"&id=" + Math.random(),
 		            success: function(response){
-                               // Si el valor si existe compararlo con mensaje error.
-                                if (response.mensaje == "Si Registro Actualizado") {
-                                    toastr.success("Registro(s) Actualizado(s).");
+						// Si el valor si existe compararlo con mensaje error.
+						if (response.respuesta == true) {
+							toastr.success(response.mensaje);
+						}else{
+							toastr.error(response.mensaje);
+						}
+						//
 							listar();
-                                }
-
-                                if (response.mensaje == "Si Registro") {
-                                    toastr.success("Registro(s) Guardado(s).");
-							listar();
-                                }
-                                
-                                if (response.mensaje == "No Registro") {
-                                    toastr.error("Registro(s) No Guardado(s).");
-							listar();
-                                }
-										  
-                                if (response.mensaje == "Estatus") {
-                                    toastr.error("Registro(s) No Guardado(s). No puede Existir 2 Tipos de Facturas Activas.");
-							listar();
-                                }
-										  
 						// Limpiar variables Text, y textarea
-							$("#formTiraje")[0].reset();
+							$("#formVentanaDatosEmpleado").get(0).reset();
 						// Abrimos el Formulario Modal y Rellenar For.
-							$('#VentanaNumeroFacturaTiraje').modal("hide");
+							$('#VentanaDatosEmpleado').modal("toggle");
 				}
 		        });
 			}
@@ -254,19 +216,14 @@ $("#BotonEliminarRegistro").on('click', function(){
 				$('#VentanaDatosEmpleado').modal("show");
 			// cambiar aacion_cliente para poder guardar el registro.
 				accion = "GuardarRegistro";
-			//  pasar el valor de la fechas a los diferentes objetos.
-			$('#txtFechaAutorizacion').val(today);
-			$('#txtFechaImpresion').val(today);
 		});
 		///////////////////////////////////////////////////
 		// funcionalidad del botón que abre el formulario
 		///////////////////////////////////////////////////
 	    $("#VentanaDatosEmpleado").on('hidden.bs.modal', function () {
             // Limpiar variables Text, y textarea
-				$("#formTiraje")[0].reset();
+				$("#VentanaDatosEmpleado").get(0).reset();
 				$("label.error").remove();
-				// Desabilitar Fecha Creación Proveedor.
-					//$("#txtFechaCreacion").prop("readonly",false);
 				accion = "";
 		});
 		///////////////////////////////////////////////////
