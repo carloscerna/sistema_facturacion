@@ -63,10 +63,10 @@
 						<!-- /.MENU ARCHIVOS -->
 						<li class="nav-item dropdown">
 							<a href="#" class="nav-link dropdown-toggle" id="menu-categorias" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								<span class="fa">&#xf15c;</span> Archivos
+								<span><i class="fal fa-question"></i></span> Ayuda
 							</a>
 							<div class="dropdown-menu" aria-labelledby="menu-categorias">
-								<a href="/sistema_facturacion/Archivos" id="goArchivos" data-accion="hoja_de_calculo" target="_blank" class="dropdown-item">Hoja de Cálculo </a>
+								<a href="AcercaDe.php" id="goAcercaDe" class="dropdown-item">Acerca de... </a>
 							</div>
 						</li>
 
@@ -79,15 +79,6 @@
 			</div>
 		</nav>
 {% endif %}
-<!--
-                    <li><a href="catalogo_clientes.php" id="gocat_clientes" data-accion="cat_clientes"><i class="glyphicon glyphicon-edit"></i> Catálogo Clientes</a></li>
-					<li><a href="catalogo_proveedores.php" id="gocat_proveedores" data-accion="cat_proveedores"><i class="glyphicon glyphicon-edit"></i> Catálogo Proveedores</a></li>
-					<li><a href="catalogo_categorias.php" id="gocat_categorias" data-accion="cat_categorias"><i class="glyphicon glyphicon-edit"></i> Catálogo Categorías</a></li>
-					<li><a href="catalogo_productos.php" id="gocat_productos" data-accion="cat_productos"><i class="glyphicon glyphicon-edit"></i> Catálogo Productos</a></li>
-					<li><a href="medidas.php" id="goMedidas" data-accion="medidas"><i class="glyphicon glyphicon-edit"></i> Medidas Impresión de Facturas</a></li>
-                    <li><a href="exportar_importar_inventario.php" id="goEIInventario" data-accion="exportar_importar_inventario"><i class="glyphicon glyphicon-edit"></i> Exportar e Importar Inventario</a></li>
-                    <li><a href="numero_factura.php" id="goNumeroFactura" data-accion="numero_factura"><i class="glyphicon glyphicon-edit"></i> Números de Factura</a></li>
-		-->
 <!-- VARIABLE PARA EL DIRECTOR O SUBDIRECTOR. -->
 {% if codigo_perfil == '02' or codigo_perfil == '03'%}
 
